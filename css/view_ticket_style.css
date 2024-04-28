@@ -1,0 +1,141 @@
+body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 900;
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
+form {
+  width: 100%;SCRITO POR: Informática, 2024-04-25 11:26:11
+a
+
+Escribir Comentario Nuevo
+  max-width: 900px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+  margin: 20px auto;
+}
+
+.formControl {
+  border-radius: 10px;
+  background-color: #f8f9fa;
+}
+
+label {
+  display: inline-block;
+  padding: 5px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+}
+
+.ticket {
+  font-weight: 400;
+  color: #3366cc;
+  font-size: 1.25em;
+  text-transform: uppercase;
+  padding: 10px;
+  margin-left: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.ticketUnderline {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.ticketText {
+  font-size: 1.25em;
+  font-weight: 500;
+}
+
+.descText {
+  margin: 10px;
+  padding: 10px;
+  width: 100%;
+  height: 150px;
+  border: 1px solid #ccc;
+  resize: none;
+  overflow-y: auto;
+}
+
+h3 {
+  text-align: center;
+  text-transform: uppercase;
+  border-bottom: 2px solid #c0c0c0;
+}
+
+.titles {
+  font-size: 1.3em;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-bottom: 2px solid #c0c0c0;
+}
+
+.comment {
+  background-color: #ebebeb;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.ticketUnderline {
+  border-bottom: 1px solid #ccc;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+select,
+input[type="text"],
+input[type="submit"],
+input[type="button"],
+input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+input[type="submit"],
+input[type="button"] {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 400px;
+  color: white;
+  border-radius: 10px;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: #45a049;
+}

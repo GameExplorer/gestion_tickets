@@ -1,0 +1,204 @@
+body {
+  margin: 0 auto;
+  width: 100vw;
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 900;
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+
+/* Table style */
+table {
+  margin: 0 auto;
+  width: 95%;
+  text-align: center;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+thead {
+  display: table-header-group;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+th {
+  padding: 5px 10px 5px 10px;
+  width: 125px;
+  font-size: 1em;
+  display: table-cell;
+  text-transform: uppercase;
+  font-weight: 900;
+  background-color: #96c565;
+  color: white;
+}
+
+th:nth-child(10) {
+  width: 100px;
+}
+
+th:last-child {
+  width: 400px;
+}
+
+th:nth-child(even) {
+  background-color: #5fa142;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th a,
+td a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  width: 100%;
+}
+
+th a.sort-by {
+  padding-right: 18px;
+  position: relative;
+}
+
+a.sort-by:before,
+a.sort-by:after {
+  border: 4px solid transparent;
+  content: "";
+  display: block;
+  height: 0;
+  right: 5px;
+  top: 50%;
+  position: absolute;
+  width: 0;
+}
+
+a.sort-by:before {
+  border-bottom-color: black;
+  margin-top: -9px;
+}
+
+a.sort-by:after {
+  border-top-color: black;
+  margin-top: 1px;
+}
+
+th:focus,
+th:hover {
+  background-color: #eea236;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  background-color: #4caf50;
+  font-size: 1em;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+#clearFiltersBtn {
+  width: 120px;
+  background-color: #f44336;
+  font-size: 1em;
+  color: white;
+  padding: 10px 10px;
+  margin: 5px;
+  margin-right: 250px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Status {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Table buttons */
+.tableButtons {
+  width: 120px;
+  height: 50px;
+  background-color: #4caf50;
+  font-size: 1.1em;
+  color: white;
+  margin: 0 10px 5px 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.tableButtons:hover {
+  background-color: white;
+  color: #4caf50;
+  font-weight: 600;
+  border: 2px solid #4caf50;
+  transition: 0.25s ease-in-out;
+}
+
+.hidden {
+  display: none;
+}
+
+/*File Icons */
+.icons {
+  justify-content: center;
+  object-fit: contain;
+  width: 50px;
+  height: 50px;
+}
+
+/* Filter inputs*/
+.filter-input {
+  width: 100%;
+  padding: 3px;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 5px 15px 5px 10px;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+/* Date Filter */
+.date-inputs-container {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-filter-icon {
+  cursor: pointer;
+}
+
+.date-inputs {
+  position: fixed;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 15px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+.date-inputs.show {
+  display: block;
+  z-index: 1000;
+}

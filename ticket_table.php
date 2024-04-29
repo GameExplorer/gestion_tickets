@@ -8,7 +8,6 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Tickets table</title>
-        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/ticket_table_style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
@@ -232,14 +231,17 @@ session_start();
 
                 echo "<td class='button-group'>";
                 echo "<button class='tableButtons' onclick=\"window.location.href='view_ticket.php?ticket_id=" . $row["id_ticket"] . " '\">DETALLES</button>";
-                echo "<button class='tableButtons' onclick=\"removeRow(this)\">OCULTAR</button>";
+                //non logged -users shouldn't see this button and the status select button
+                if (isset($_SESSION['loggedin'])) {
+                    echo "<button class='tableButtons' onclick=\"removeRow(this)\">OCULTAR</button>";
 
-                echo "<select class='status-select'>";
-                echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
-                echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
-                echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
-                echo "<option value='Cerrado'" . ($row["estado"] === "Cerrado" ? " selected" : "") . ">Cerrado</option>";
-                echo "</select>";
+                    echo "<select class='status-select'>";
+                    echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
+                    echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
+                    echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
+                    echo "<option value='Cerrado'" . ($row["estado"] === "Cerrado" ? " selected" : "") . ">Cerrado</option>";
+                    echo "</select>";
+                }
 
                 echo "</td>";
                 echo "</tr>";

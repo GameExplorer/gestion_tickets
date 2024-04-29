@@ -34,77 +34,106 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </head>
 
     <body>
-        <div class="page-wrapper">
-
-            <?php
-            $pageTitle = "CREAR TICKET";
-            include 'includes/menu.php';
-            ?>
+        <?php
+        $pageTitle = "CREAR TICKET";
+        include 'includes/menu.php';
+        ?>
+        <div class="container">
             <form action="includes/submit_ticket.php" method="post" enctype="multipart/form-data" class="incident-form">
-                <div class="form-row">
-                    <label for="title">Título:</label>
-                    <input type="text" id="title" name="title" maxlength="32" placeholder="Introducir título"
-                        value="<?php echo htmlspecialchars($title); ?>" required>
-                </div>
-
-                <div class="form-row">
-                    <label for="sender">Emisor:</label>
-                    <input type="text" id="sender" name="sender" maxlength="32" placeholder="Introducir nombre"
-                        value="<?php echo htmlspecialchars($name); ?>" required>
-                    <div for="location" class="textRight">Localización:</div>
-                    <div><?php echo $nombre; ?></div>
-                </div>
-
-                <div class="form-row">
-                    <label for="description">Descripción:</label>
-                    <textarea id="description" name="description" maxlength="500" placeholder="Incluye una descripción"
-                        required><?php echo htmlspecialchars($description); ?></textarea>
-                </div>
-
-                <div class="form-row">
-                    <label for="department">Departamento:</label>
-                    <select id="department" name="department" onchange="populateCategories()"></select>
-
-                    <div for="category" class="textRight">Categoría:</div>
-                    <select id="category" name="category"></select>
-                </div>
-
-                <script>
-                    // Function to populate the category select options based on the selected department
-                    function populateCategories() {
-                        var department = document.getElementById('department').value;
-
-                        // Send AJAX request to fetch categories for the selected department
-                        var xhr = new XMLHttpRequest();
-                        xhr.onreadystatechange = function () {
-                            if (this.readyState == 4 && this.status == 200) {
-                                var categories = JSON.parse(this.responseText);
-
-                                // Clear existing options
-                                var categorySelect = document.getElementById('category');
-                                categorySelect.innerHTML = '';
-
-                                // Add new options
-                                categories.forEach(function (category) {
-                                    var option = document.createElement('option');
-                                    option.value = category;
-                                    option.textContent = category;
-                                    categorySelect.appendChild(option);
-                                });
-                            }
-                        };
-                        xhr.open('GET', 'includes/category_listing.php?department=' + encodeURIComponent(department), true);
-                        xhr.send();
-                    }
-                </script>
-
-                <div class="form-row">
-                    <label for="attachment">Adjuntos:</label>
-                    <div id="attachment-container">
-                        <input type="file" id="attachment" name="attachment[]" accept=".pdf, .png, .jpg, .jpeg">
+                <!-- title -->
+                <div class="row mb-3">
+                    <label for="title" class="col-md-3 col-form-label">Título:</label>
+                    <div class="col-md-9">
+                        <input type="text" id="title" name="title" maxlength="32" placeholder="Introducir título"
+                            value="<?php echo htmlspecialchars($title); ?>" required class="form-control">
                     </div>
-                    <button type="button" onclick="addAttachment()">Añadir otro</button>
                 </div>
+                <!-- Sender and Location -->
+                <div class="row mb-3">
+                    <label for="sender" class="col-md-3 col-form-label">Emisor:</label>
+                    <div class="col-md-5">
+                        <input type="text" id="sender" name="sender" maxlength="32" placeholder="Introducir nombre"
+                            value="<?php echo htmlspecialchars($name); ?>" required class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-md-right mt-2">Localización:&nbsp;&nbsp;
+                            <?php echo $nombre; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="row mb-3">
+                    <label for="description" class="col-md-3 col-form-label">Descripción:</label>
+                    <div class="col-md-9">
+                        <textarea id="description" name="description" maxlength="500"
+                            placeholder="Incluye una descripción" required
+                            class="form-control"><?php echo htmlspecialchars($description); ?></textarea>
+                    </div>
+                </div>
+
+                <!-- Department and Category -->
+                <div class="row mb-3">
+                    <label for="department" class="col-md-3 col-form-label">Departamento:</label>
+                    <div class="col-md-3">
+                        <select id="department" name="department" onchange="populateCategories()"
+                            class="form-control"></select>
+                    </div>
+                    <label for="category" class="col-md-3 col-form-label">Categoría:</label>
+                    <div class="col-md-3">
+                        <select id="category" name="category" class="form-control"></select>
+                    </div>
+
+                    <script>
+                        // Function to populate the category select options based on the selected department
+                        function populateCategories() {
+                            var department = document.getElementById('department').value;
+
+                            // Send AJAX request to fetch categories for the selected department
+                            var xhr = new XMLHttpRequest();
+                            xhr.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    var categories = JSON.parse(this.responseText);
+
+                                    // Clear existing options
+                                    var categorySelect = document.getElementById('category');
+                                    categorySelect.innerHTML = '';
+
+                                    // Add new options
+                                    categories.forEach(function (category) {
+                                        var option = document.createElement('option');
+                                        option.value = category;
+                                        option.textContent = category;
+                                        categorySelect.appendChild(option);
+                                    });
+                                }
+                            };
+                            xhr.open('GET', 'includes/category_listing.php?department=' + encodeURIComponent(department), true);
+                            xhr.send();
+                        }
+                    </script>
+                </div>
+
+                <!-- Attachment -->
+                <div class="row mb-3">
+                    <label for="attachment" class="col-md-3 col-form-label">Adjuntos:</label>
+                    <div class="col-md-9">
+                        <div class="row"> 
+                            <div class="col-8"> 
+                                <div id="attachment-container">
+                                    <input type="file" id="attachment" name="attachment[]"
+                                        accept=".pdf, .png, .jpg, .jpeg" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-3"> 
+                                <button type="button" onclick="addAttachment()" class="btn btn-primary"
+                                    style="background-color: #4caf50; color: white; border: none; cursor: pointer; width: 100%; height: 70%; margin-top: 12.5px;margin-left: 10px;">
+                                    Añadir otro</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <script>
                     function addAttachment() {
@@ -118,9 +147,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 </script>
 
-                <div class="form-row">
-                    <input type="submit" value="Guardar">
-                    <input type="button" value="Volver" id="backButton" onclick="goToTicketTable()">
+                <!-- Submit and Back Button -->
+                <div class="row mb-3">
+                    <div class="col-md-6 text-md-end">
+                        <input type="submit" value="Guardar" class="btn btn-primary">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="button" value="Volver" id="backButton" onclick="goToTicketTable()"
+                            class="btn btn-secondary">
+                    </div>
                 </div>
             </form>
         </div>

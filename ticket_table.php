@@ -182,11 +182,11 @@ session_start();
             //Priority column
             echo "<td><select class='filter-select' data-column='7'> 
                   <option value=''>Todo</option>
-                  <option value='1'>Nuevo</option>
-                  <option value='2'>Urgente</option>
-                  <option value='3'>Alta</option>
-                  <option value='4'>Media</option>
-                  <option value='5'>Baja</option>
+                  <option value='Nuevo'>Nuevo</option>
+                  <option value='Urgente'>Urgente</option>
+                  <option value='Alta'>Alta</option>
+                  <option value='Media'>Media</option>
+                  <option value='Baja'>Baja</option>
               </select></td>";
 
             //Last Updated column
@@ -372,42 +372,50 @@ session_start();
         });
 
         // Function filters data based on the input field values, also we can clear thse values
-        function filterTable(columnIndex, filterValue) {
-            const table = document.getElementById('myTable');
-            const tbody = table.getElementsByTagName('tbody')[0]; //body el.
-            const rows = tbody.getElementsByTagName('tr');
+        function filterTable() {
+    const table = document.getElementById('myTable');
+    const tbody = table.getElementsByTagName('tbody')[0]; // body element
+    const rows = tbody.getElementsByTagName('tr');
 
-            // Loop through all rows in the table...
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                const cells = row.getElementsByTagName('td');
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const cells = row.getElementsByTagName('td');
+        let shouldDisplay = true;
 
-                let shouldDisplay = true;
+        for (let j = 0; j < cells.length; j++) {
+            const targetCell = cells[j];
+            const filterInput = document.querySelector(`.filter-input[data-column="${j}"]`);
+            const filterSelect = document.querySelector(`.filter-select[data-column="${j}"]`);
 
-                // Loop through all cells in the row
-                for (let j = 0; j < cells.length; j++) {
-                    if (columnIndex === '' || filterValue === '') {
-                        // Reset all rows to display if either columnIndex or filterValue is empty
-                        row.style.display = '';
-                    } else {
-                        const targetCell = cells[columnIndex];
-                        if (targetCell) {
-                            const cellText = targetCell.textContent || targetCell.innerText;
-
-                            // Check if any cell matches the filter criteria
-                            if (cellText.toUpperCase().indexOf(filterValue.toUpperCase()) > -1) {
-                                shouldDisplay = true;
-                                break;
-                            } else {
-                                shouldDisplay = false;
-                            }
-                        }
+            if (filterInput) {
+                const inputValue = filterInput.value.trim().toUpperCase();
+                if (inputValue !== '' && inputValue !== 'Todo') {
+                    const cellText = targetCell.textContent || targetCell.innerText;
+                    if (cellText.toUpperCase().indexOf(inputValue) === -1) {
+                        shouldDisplay = false;
+                        break;
                     }
                 }
+            }
 
-                row.style.display = shouldDisplay ? '' : 'none'; // Show or hide the row based on the filter criteria
+            if (filterSelect) {
+                const selectValue = filterSelect.value.trim().toUpperCase();
+                if (selectValue !== '' && selectValue !== 'Todo') {
+                    const cellText = targetCell.textContent || targetCell.innerText;
+                    if (j === 7 && cellText.toUpperCase() !== selectValue) { // Prioridad column (index 7)
+                        shouldDisplay = false;
+                        break;
+                    } else if (j !== 7 && cellText.toUpperCase().indexOf(selectValue) === -1) {
+                        shouldDisplay = false;
+                        break;
+                    }
+                }
             }
         }
+
+        row.style.display = shouldDisplay ? '' : 'none';
+    }
+}
 
         const clearFiltersBtn = document.getElementById('clearFiltersBtn');
         if (clearFiltersBtn) {

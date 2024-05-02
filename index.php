@@ -297,7 +297,10 @@ $pageTitle = "Tabla Tickets";
                 echo "</td>";
 
                 echo "<td class='button-group'>";
-                echo "<button class='tableButtons' onclick=\"window.location.href='view_ticket.php?ticket_id=" . $row["id_ticket"] . " '\">DETALLES</button>";
+                echo '<form action="view_ticket.php" method="post">' .
+                     '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
+                     '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
+                     '</form>';
                 echo "<button class='tableButtons' onclick=\"removeRow(this)\">OCULTAR</button>";
                 echo "</td>";
                 echo "</tr>";

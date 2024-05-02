@@ -14,10 +14,6 @@ session_start();
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/ticket_table_script.js"></script>
-        <script>
-            //script in another file if it doesn't work copy it here
-
-        </script>
     </head>
 
     <body>
@@ -230,7 +226,11 @@ session_start();
                 echo "</td>";
 
                 echo "<td class='button-group'>";
-                echo "<button class='tableButtons' onclick=\"window.location.href='view_ticket.php?ticket_id=" . $row["id_ticket"] . " '\">DETALLES</button>";
+                //echo "<button class='tableButtons' onclick=\"viewTicketDetails(" . $row["id_ticket"] . ")\">DETALLES</button>";
+                echo '<form action="view_ticket.php" method="post">' .
+                     '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
+                     '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
+                     '</form>';
                 //non logged -users shouldn't see this button and the status select button
                 if (isset($_SESSION['loggedin'])) {
                     echo "<button class='tableButtons' onclick=\"removeRow(this)\">OCULTAR</button>";

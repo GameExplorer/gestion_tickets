@@ -169,10 +169,10 @@ ini_set('display_errors', 1);
         $errorFound = false;
 
         // PHP code to retrieve ticket details from the database
-        $ticketId = $_GET['ticket_id'];
+        $ticketId = isset($_POST['ticket_id']) ? $_POST['ticket_id'] : null;
 
         // Query the database to get ticket details based on $ticketId
-        $sql = "SELECT id_departamento, titulo, nombre, localizacion, prioridad, descripcion, categoria, estado, fecha_creacion, fecha_actualizacion FROM tickets WHERE id_ticket = $ticketId";
+        $sql = "SELECT id_departamento, titulo, nombre, localizacion, prioridad, descripcion, categoria, estado, check_usuario, check_dept, fecha_creacion, fecha_actualizacion, oculto FROM tickets WHERE id_ticket = $ticketId";
 
         // Execute the SQL query
         $result = $conn->query($sql);
@@ -188,8 +188,11 @@ ini_set('display_errors', 1);
             $description = $row['descripcion'];
             $category = $row['categoria'];
             $status = $row['estado'];
+            $checkLocation =$row['check_usuario'];
+            $checkDept =$row['check_dept'];
             $ticketOpen = $row['fecha_creacion'];
             $lastUpdated = $row['fecha_actualizacion'];
+            $hiddenTicket = $row['oculto'];
             $sql = "SELECT nombre_departamento FROM departamentos WHERE id_departamento = $departmentId";
             $result = $conn->query($sql);
             if ($result === false) {
@@ -225,7 +228,7 @@ ini_set('display_errors', 1);
                 $sql = "UPDATE tickets SET fecha_actualizacion = '$lastUpdated' WHERE id_ticket = $ticketId";
                 if ($conn->query($sql) === TRUE) {
                     echo "<script>alert('Ticket actualizado correctamente');</script>";
-                    echo "<script>window.location.href = 'view_ticket.php?ticket_id=" . urlencode($ticketId) . "';</script>";
+                    echo "<script>window.location.href = 'ticket_table.php';</script>";
                 } else {
                     echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
                 }
@@ -263,7 +266,7 @@ ini_set('display_errors', 1);
                     </div>
                     <div class="row ticketUnderline">
                         <div class="col-md-6">
-                            <p><span class="ticket">Emisor:</span> <span class="ticketText"><?php echo $name; ?></span>
+                            <p><span class="ticket">Nombre:</span> <span class="ticketText"><?php echo $name; ?></span>
                             </p>
                         </div>
                         <div class="col-md-6">
@@ -293,11 +296,16 @@ ini_set('display_errors', 1);
                                 <div class="col-md-3">
                                     <label for="priority">Priority:</label>
                                     <select name="priority" id="priority" class="formControl">
-                                        <?php for ($i = 0; $i <= 5; $i++) { ?>
-                                            <option value="<?php echo $i; ?>" <?php if ($i == $priority)
-                                                   echo "selected"; ?>>
-                                         <?php echo $i; ?></option>
-                                        <?php } ?>
+                                        <option value="Nuevo" <?php if ($priority == "Nuevo")
+                                            echo "selected"; ?>>Nuevo</option>
+                                        <option value="Urgente" <?php if ($priority == "Urgente")
+                                            echo "selected"; ?>>Urgente</option>
+                                        <option value="Alta" <?php if ($priority == "Alta")
+                                            echo "selected"; ?>>Alta</option>
+                                        <option value="Media" <?php if ($priority == "Media")
+                                            echo "selected"; ?>>Media</option>
+                                        <option value="Baja" <?php if ($priority == "Baja")
+                                            echo "selected"; ?>>Baja</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -379,6 +387,7 @@ ini_set('display_errors', 1);
                             </div>
                             <div class="row mt-4">
                                 <div class="col-md-12 d-flex justify-content-center">
+                                    <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
                                     <input type="submit" name="save" value="Guardar" class="btn btn-primary">
                                 </div>
                             </div>
@@ -408,6 +417,62 @@ ini_set('display_errors', 1);
                         </div>
                     </div>
                 <?php } ?>
+                <?php
+                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['close_ticket'])) {
+                    if (isset($_SESSION['loggedin'])) {
+                        $checkDept = true;
+                    } else {
+                        $checkLocation = true;
+                    }
+                
+                    // Update the database based on the boolean values
+                    if ($checkLocation) {
+                        $timeTicketSolved = date("Y-m-d H:i:s");
+                        $sql = "UPDATE tickets SET check_usuario = '1', estado = 'Cerrado', fecha_actualizacion = '$timeTicketSolved' WHERE id_ticket = $ticketId";
+                        if ($conn->query($sql) === TRUE) {
+                            // Insert a message into the mensajes table
+                            $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES ($ticketId, 'Sistema', 'La localización ha marcado la incidencia como Resuelto', '$timeTicketSolved')";
+                            $conn->query($sql);
+                            echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
+                            echo "<script>window.location.href = 'ticket_table.php';</script>";
+                        } else {
+                            echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
+                        }
+                    }
+                
+                    if ($checkDept) {
+                        $timeTicketSolved = date("Y-m-d H:i:s");
+                        $sql = "UPDATE tickets SET check_dept = '1', estado = 'Cerrado', fecha_actualizacion = '$timeTicketSolved' WHERE id_ticket = $ticketId";
+                        if ($conn->query($sql) === TRUE) {
+                            // Insert a message into the mensajes table
+                            $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES ($ticketId, 'Sistema', 'El Departamento ha marcado la incidencia como Resuelto', '$timeTicketSolved')";
+                            $conn->query($sql);
+                            echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
+                            echo "<script>window.location.href = 'ticket_table.php';</script>";
+                        } else {
+                            echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
+                        }
+                    }
+                }
+
+                if ($checkDept && $checkLocation) {
+                    $timeTicketSolved = date("Y-m-d H:i:s");
+                    $sql = "UPDATE tickets SET estado ='Cerrado', oculto = '1', fecha_actualizacion = '$timeTicketSolved' WHERE id_ticket = $ticketId";
+                    $conn->query($sql);
+                    if ($conn->query($sql) === TRUE) {
+                        $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES ($ticketId, 'Sistema', 'El Ticket está cerrado', '$timeTicketSolved')";
+                        $conn->query($sql);
+                    } else {
+                        echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
+                    }
+                }
+                ?>
+
+                <!-- Button to close the ticket -->
+                <form method="post">
+                    <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
+                    <input type="submit" name="close_ticket" value="Marcar como Resuelto" class="btn btn-primary">
+                </form>
             </div>
             <div class="col-lg-6">
 
@@ -475,6 +540,7 @@ ini_set('display_errors', 1);
                         </div>
                         <div class="col-md-3">
                             <div class="mb-2">
+                                <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
                                 <input type="submit" name="submit_comment" value="Enviar" class="btn btn-primary">
                             </div>
                         </div>
@@ -547,17 +613,14 @@ ini_set('display_errors', 1);
                             }
                         }
                         if (!$errorFound) {
-                            echo "<script>alert('Mensaje enviado correctamente.');</script>";
-                            echo "<script>window.location.href = 'view_ticket.php?ticket_id=" . urlencode($ticketId) . "';</script>";
-                            exit;
-
+                            alert('Mensaje enviado correctamente.');
+                            echo "<script>window.location.href = 'ticket_table.php';</script>";
                         } else {
                             // Delete the message if there's any error with files
                             $sql = "DELETE FROM mensajes WHERE id_mensaje = $commentId";
                             $conn->query($sql);
-                            echo "<script>alert('Error al enviar mensaje.');</script>";
-                            header("Location: view_ticket.php?ticket_id=" . urlencode($ticketId) . "&newComment=" . urlencode($newComment));
-                            exit;
+                            alert('Error al enviar mensaje.');
+                            "<script>window.location.href = 'ticket_table.php';</script>";
                         }
                     } else {
                         // Error occurred while inserting comment

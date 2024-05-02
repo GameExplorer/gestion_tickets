@@ -10,14 +10,155 @@ ini_set('display_errors', 1);
     <head>
         <meta charset="UTF-8">
         <title>Detalles Ticket</title>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/view_ticket_style.css">    
+        <link rel="stylesheet" href="css/view_ticket_style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+            body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden;
+            }
+
+            h1 {
+                text-align: center;
+                text-transform: uppercase;
+                font-weight: 900;
+                padding-top: 15px;
+                padding-bottom: 5px;
+            }
+
+            h3 {
+                text-align: center;
+                text-transform: uppercase;
+                border-bottom: 2px solid #c0c0c0;
+            }
+
+            h4 {
+                margin-left: 10px;
+            }
+
+            h5 {
+                margin-left: 10px;
+                font-size: 1.3em;
+                text-transform: uppercase;
+                font-weight: bold;
+                margin-left: 10px;
+                border-bottom: 2px solid #c0c0c0;
+            }
+
+            .formControl {
+                border-radius: 10px;
+                background-color: #f8f9fa;
+            }
+
+            label {
+                display: inline-block;
+                padding: 5px;
+            }
+
+            textarea {
+                width: 100%;
+                height: 100px;
+            }
+
+            .ticket {
+                font-weight: 400;
+                color: #3366cc;
+                font-size: 1.25em;
+                text-transform: uppercase;
+                padding: 10px;
+                margin-left: 10px;
+                margin-bottom: 15px;
+                align-items: center;
+            }
+
+            .ticketUnderline {
+                border-bottom: 1px solid #ccc;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            .ticketText {
+                font-size: 1.25em;
+                font-weight: 500;
+            }
+
+            .descText {
+                margin: 10px;
+                padding: 10px;
+                width: 95%;
+                height: 150px;
+                border: 1px solid #ccc;
+                resize: none;
+            }
+
+            .comment {
+                background-color: #ebebeb;
+                padding: 12.5px 0 12.5px 10px;
+                margin: 15px;
+                border-radius: 7px;
+            }
+
+            .ticketUnderline {
+                border-bottom: 1px solid #ccc;
+            }
+
+            a:link {
+                text-decoration: none;
+            }
+
+            a:visited {
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: none;
+            }
+
+            a:active {
+                text-decoration: none;
+            }
+
+            select,
+            input[type="text"],
+            input[type="submit"],
+            input[type="button"],
+            input[type="file"] {
+                width: 100%;
+                padding: 12px;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+            }
+
+            input[type="submit"],
+            input[type="button"] {
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                color: white;
+                border-radius: 10px;
+            }
+
+            input[type="submit"]:hover,
+            input[type="button"]:hover {
+                background-color: #45a049;
+            }
+
+            @media (max-width: 767px) {
+                .textBreak {
+                    padding-left: 22.5px;
+                    display: block;
+                }
+            }
+        </style>
     </head>
 
-     <body>
+    <body>
 
         <?php
         $pageTitle = "Información Ticket";
@@ -99,47 +240,53 @@ ini_set('display_errors', 1);
         }
         ?>
         <div class="row">
-            <div class="col">
+            <div class="col-lg-6">
                 <h1 class="ticketUnderline"><?php echo $title; ?></h1>
-                <div>
-                    <div class="row ticketUnderline">
-                        <div class="col-md-2">
-                            <p><span class="ticket">ID:</span> <span class="ticketText"><?php echo $ticketId; ?></span>
+                <div class="ticketUnderline">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-md text-sm"><span class="ticket">ID:</span> <span
+                                    class="ticketText"><?php echo $ticketId; ?></span>
                             </p>
                         </div>
-                        <div class="col-md-5">
-                            <p><span class="ticket">Fecha Creación:</span> <span
+                        <div class="col-md-6">
+                            <p class="text-md text-sm"><span class="ticket">Fecha Creación:</span> <span
                                     class="ticketText"><?php echo $ticketOpen; ?></span></p>
                         </div>
-                        <div class="col-md-5">
-                            <p><span class="ticket">Última Modificación:</span> <span
-                                    class="ticketText"><?php echo $lastUpdated; ?></span></p>
+                        <div class="col-md-6">
+                            <p class="text-md text-sm"><span class="ticket">Última Modificación:</span>
+                                <span class="ticketText textBreak"
+                                    style=""><?php echo $lastUpdated; ?></span>
+
+
                         </div>
                     </div>
                     <div class="row ticketUnderline">
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <p><span class="ticket">Emisor:</span> <span class="ticketText"><?php echo $name; ?></span>
                             </p>
                         </div>
-                        <div class="col-md-5">
-                            <p><span class="ticket">Localización:</span> <span
-                                    class="ticketText"><?php echo $location; ?></span>
+                        <div class="col-md-6">
+                            <p><span class="ticket ">Localización:</span> <span class="ticketText textBreak"
+                                    style="padding-left:22.5px; "><?php echo $location; ?></span>
                             </p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="">
+                        <div class="col">
                             <p><span class="ticket">Descripción:</span></p>
-                            <div class="descText" contenteditable="false"><?php echo $description; ?></div>
+                            <div class="descText" contenteditable="false" class="form-control">
+                                <?php echo $description; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- Priority Selector, Category Selector, Department Selector, Status Selector, Save Button (if logged in) -->
                 <?php if (isset($_SESSION['loggedin'])) { ?>
                     <h4 class="titles"
-                    style="font-size:1.7em; text-align:center; text-transform:uppercase; margin-top:10px; border:none">
-                    Editar
-                    Información</h4>
+                        style="font-size:1.7em; text-align:center; text-transform:uppercase; margin-top:10px; border:none">
+                        Editar
+                        Información</h4>
                     <form method="post">
                         <div>
                             <div class="row">
@@ -241,12 +388,12 @@ ini_set('display_errors', 1);
                     <!-- Non-editable fields for non-logged-in users -->
                     <div class="ticketDetails">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <p><span class="ticket">Prioridad:</span> <span
                                         class="ticketText"><?php echo $priority; ?></span>
                                 </p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <p><span class="ticket">Departamento:</span> <span
                                         class="ticketText"><?php echo $departmentName; ?></span></p>
                             </div>
@@ -262,7 +409,7 @@ ini_set('display_errors', 1);
                     </div>
                 <?php } ?>
             </div>
-            <div class="col">
+            <div class="col-lg-6">
 
                 <?php
                 // PHP code to retrieve attachments for the ticket from the database
@@ -277,7 +424,7 @@ ini_set('display_errors', 1);
                 }
 
                 if (!empty($attachments)) {
-                    echo "<h5 class='titles'>Archivos Adjuntos</h5>";
+                    echo "<h5 class=''>Archivos Adjuntos</h5>";
                     echo "<ul>";
                     foreach ($attachments as $attachment) {
                         echo "<li><a href='uploads/" . $attachment['nombre_archivo'] . "' target='_blank'>" . $attachment['nombre_archivo'] . "</a></li>";
@@ -286,7 +433,7 @@ ini_set('display_errors', 1);
                 }
                 ?>
 
-                <h5 class="titles">Mensajes</h5>
+                <h5 class="">Mensajes</h5>
 
                 <?php
                 // PHP code to retrieve comments for the ticket from the database
@@ -316,16 +463,24 @@ ini_set('display_errors', 1);
                     echo "<p>No se han encontrado mensajes.</p>";
                 }
                 ?>
-                <div>
-                    <h5>Escribir Comentario Nuevo</h5>
+                <div class="col-md-12">
+                    <h4>Escribir Comentario Nuevo</h4>
                     <form method="post" enctype="multipart/form-data">
-                        <div id="attachment-container">
-                            <input type="file" id="attachment" name="attachment[]" accept=".pdf, .png, .jpg, .jpeg"><br>
+                        <div class="mb-3 col-md-4">
+                            <input type="file" id="attachment" name="attachment[]" accept=".pdf, .png, .jpg, .jpeg"
+                                class="form-control">
                         </div>
-                        <textarea name="new_comment" maxlength="255" required></textarea><br>
-                        <input type="submit" name="submit_comment" value="Enviar">
-                    </form>
+                        <div class="mb-3">
+                            <textarea name="new_comment" maxlength="255" class="form-control" required></textarea>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-2">
+                                <input type="submit" name="submit_comment" value="Enviar" class="btn btn-primary">
+                            </div>
+                        </div>
                 </div>
+
+                </form>
                 <?php
                 // PHP code to handle posting new comments and file uploads
                 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_comment'])) {

@@ -1,7 +1,7 @@
 body {
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
 }
 
@@ -13,18 +13,23 @@ h1 {
   padding-bottom: 5px;
 }
 
-form {
-  width: 100%;SCRITO POR: Informática, 2024-04-25 11:26:11
-a
+h3 {
+  text-align: center;
+  text-transform: uppercase;
+  border-bottom: 2px solid #c0c0c0;
+}
 
-Escribir Comentario Nuevo
-  max-width: 900px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f8f9fa;
-  margin: 20px auto;
+h4 {
+  margin-left: 10px;
+}
+
+h5 {
+  margin-left: 10px;
+  font-size: 1.3em;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: 10px;
+  border-bottom: 2px solid #c0c0c0;
 }
 
 .formControl {
@@ -56,6 +61,7 @@ textarea {
 .ticketUnderline {
   border-bottom: 1px solid #ccc;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .ticketText {
@@ -66,31 +72,17 @@ textarea {
 .descText {
   margin: 10px;
   padding: 10px;
-  width: 100%;
+  width: 95%;
   height: 150px;
   border: 1px solid #ccc;
   resize: none;
-  overflow-y: auto;
-}
-
-h3 {
-  text-align: center;
-  text-transform: uppercase;
-  border-bottom: 2px solid #c0c0c0;
-}
-
-.titles {
-  font-size: 1.3em;
-  text-transform: uppercase;
-  font-weight: bold;
-  border-bottom: 2px solid #c0c0c0;
 }
 
 .comment {
   background-color: #ebebeb;
-  padding: 15px;
-  margin: 10px;
-  border-radius: 5px;
+  padding: 12.5px 0 12.5px 10px;
+  margin: 15px;
+  border-radius: 7px;
 }
 
 .ticketUnderline {
@@ -130,7 +122,7 @@ input[type="button"] {
   color: white;
   border: none;
   cursor: pointer;
-  width: 400px;
+  width: 100%;
   color: white;
   border-radius: 10px;
 }
@@ -138,4 +130,11 @@ input[type="button"] {
 input[type="submit"]:hover,
 input[type="button"]:hover {
   background-color: #45a049;
+}
+
+@media (max-width: 767px) {
+  .textBreak {
+    padding-left: 22.5px;
+    display: block;
+  }
 }

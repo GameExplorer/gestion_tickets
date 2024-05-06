@@ -7,13 +7,20 @@ session_start();
 
     <head>
         <meta charset="UTF-8">
-        <title>Tickets table</title>
+        <title>TABLA TICKETS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/ticket_table_style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/ticket_table_script.js"></script>
+        <style>
+            body {
+
+                overflow-x: hidden;
+            }
+        </style>
     </head>
 
     <body>
@@ -90,6 +97,7 @@ session_start();
 
         if ($result->num_rows > 0) {
             $sort == 'ASC' ? $sort = 'DESC' : $sort = 'ASC';
+
             echo "<table id='myTable'>";
             echo "<thead>";
             echo "<tr>";
@@ -103,7 +111,7 @@ session_start();
             echo "<th><a class='sort-by' href='ticket_table.php?order=prioridad&sort=$newSort'>Prioridad</a></th>";
             echo "<th><a class='sort-by' href='ticket_table.php?order=fecha_actualizacion&sort=$newSort'>Fecha Actualización</a></th>";
             echo "<th>Archivos</th>";
-            echo "<th></th>";
+            echo "<th></th> ";
             echo "</tr>";
 
             // Add dropdowns for filtering above each column header
@@ -172,7 +180,6 @@ session_start();
                   <option value='Abierto'>Abierto</option>
                   <option value='En Progreso'>En Progreso</option>
                   <option value='En Espera'>En Espera</option>
-                  <option value='Cerrado'>Cerrado</option>
               </select></td>";
 
             //Priority column
@@ -198,7 +205,7 @@ session_start();
             echo '</div>';
             echo '</td>';
 
-            echo "<td></td>"; // Empty cell for Files column
+            echo "<td></td>";
             echo '<td><button id="clearFiltersBtn">Borrar Filtros</button></td>';
             echo "</tr>";
 
@@ -228,18 +235,16 @@ session_start();
                 echo "<td class='button-group'>";
                 //echo "<button class='tableButtons' onclick=\"viewTicketDetails(" . $row["id_ticket"] . ")\">DETALLES</button>";
                 echo '<form action="view_ticket.php" method="post">' .
-                     '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
-                     '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
-                     '</form>';
+                    '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
+                    '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
+                    '</form>';
                 //non logged -users shouldn't see this button and the status select button
                 if (isset($_SESSION['loggedin'])) {
-                    echo "<button class='tableButtons' onclick=\"removeRow(this)\">OCULTAR</button>";
 
                     echo "<select class='status-select'>";
                     echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
                     echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
                     echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
-                    echo "<option value='Cerrado'" . ($row["estado"] === "Cerrado" ? " selected" : "") . ">Cerrado</option>";
                     echo "</select>";
                 }
 
@@ -282,7 +287,6 @@ session_start();
                 const incidentIdElement = row.querySelector('.incident-id');
                 const statusCell = row.querySelector('.Status');
                 const lastUpdatedCell = row.querySelector('.Last_Updated');
-                console.log('Last Updated Cell:', lastUpdatedCell);
 
                 // Send AJAX request to update status
                 const xhr = new XMLHttpRequest();
@@ -369,53 +373,53 @@ session_start();
                 const columnIndex = this.dataset.column;
                 filterTable(columnIndex, this.value);
             });
-        });
-
-        // Function filters data based on the input field values, also we can clear thse values
+                });
+  
+                      // Function filters data based on the input field values, also we can clear thse values
         function filterTable() {
-    const table = document.getElementById('myTable');
-    const tbody = table.getElementsByTagName('tbody')[0]; // body element
-    const rows = tbody.getElementsByTagName('tr');
+                    const table = document.getElementById('myTable');
+                    const tbody = table.getElementsByTagName('tbody')[0]; // body element
+                    const rows = tbody.getElementsByTagName('tr');
 
-    for (let i = 0; i < rows.length; i++) {
-        const row = rows[i];
-        const cells = row.getElementsByTagName('td');
-        let shouldDisplay = true;
+                    for (let i = 0; i < rows.length; i++) {
+                        const row = rows[i];
+                        const cells = row.getElementsByTagName('td');
+                        let shouldDisplay = true;
+      
+                  for (let j = 0; j < cells.length; j++) {
+                            const targetCell = cells[j];
+                            const filterInput = document.querySelector(`.filter-input[data-column="${j}"]`);
+                            const filterSelect = document.querySelector(`.filter-select[data-column="${j}"]`);
+  
+                                  if (filterInput) {
+                                const inputValue = filterInput.value.trim().toUpperCase();
+                                if (inputValue !== '' && inputValue !== 'Todo') {
+                                    const cellText = targetCell.textContent || targetCell.innerText;
+                                    if (cellText.toUpperCase().indexOf(inputValue) === -1) {
+                                        shouldDisplay = false;
+                                break;
+                                    }
+                                }
+                            }
+        
+                            if (filterSelect) {
+                                const selectValue = filterSelect.value.trim().toUpperCase();
+                                if (selectValue !== '' && selectValue !== 'Todo') {
+                                    const cellText = targetCell.textContent || targetCell.innerText;
+                                    if (j === 7 && cellText.toUpperCase() !== selectValue) { // Prioridad column (index 7)
+                                        shouldDisplay = false;
+                                        break;
+                                    } else if (j !== 7 && cellText.toUpperCase().indexOf(selectValue) === -1) {
+                                        shouldDisplay = false;
+                                        break;
+                            }
+                                }
+                            }
+                        }
 
-        for (let j = 0; j < cells.length; j++) {
-            const targetCell = cells[j];
-            const filterInput = document.querySelector(`.filter-input[data-column="${j}"]`);
-            const filterSelect = document.querySelector(`.filter-select[data-column="${j}"]`);
-
-            if (filterInput) {
-                const inputValue = filterInput.value.trim().toUpperCase();
-                if (inputValue !== '' && inputValue !== 'Todo') {
-                    const cellText = targetCell.textContent || targetCell.innerText;
-                    if (cellText.toUpperCase().indexOf(inputValue) === -1) {
-                        shouldDisplay = false;
-                        break;
-                    }
-                }
-            }
-
-            if (filterSelect) {
-                const selectValue = filterSelect.value.trim().toUpperCase();
-                if (selectValue !== '' && selectValue !== 'Todo') {
-                    const cellText = targetCell.textContent || targetCell.innerText;
-                    if (j === 7 && cellText.toUpperCase() !== selectValue) { // Prioridad column (index 7)
-                        shouldDisplay = false;
-                        break;
-                    } else if (j !== 7 && cellText.toUpperCase().indexOf(selectValue) === -1) {
-                        shouldDisplay = false;
-                        break;
-                    }
-                }
+                row.style.display = shouldDisplay ? '' : 'none';
             }
         }
-
-        row.style.display = shouldDisplay ? '' : 'none';
-    }
-}
 
         const clearFiltersBtn = document.getElementById('clearFiltersBtn');
         if (clearFiltersBtn) {
@@ -436,4 +440,6 @@ session_start();
             });
         };
     });
+
+
 </script>

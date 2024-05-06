@@ -3,6 +3,7 @@ body {
   width: 100vw;
   text-align: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -16,10 +17,9 @@ h1 {
 /* Table style */
 table {
   margin: 0 auto;
-  width: 95%;
+  width: 90%;
   text-align: center;
   border-collapse: collapse;
-  overflow: hidden;
 }
 
 thead {
@@ -117,7 +117,6 @@ button {
   background-color: #f44336;
   font-size: 1em;
   color: white;
-  padding: 10px 10px;
   margin: 5px;
   margin-right: 250px;
   border: none;
@@ -188,7 +187,7 @@ button {
 .date-filter-icon {
   cursor: pointer;
 }
-
+  
 .date-inputs {
   position: fixed;
   background-color: #fff;

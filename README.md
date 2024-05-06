@@ -1,35 +1,49 @@
-# Ticket Management
 
-This is a ticket management system prepared for Central Uniformes needs. The features are as follows:
- - There's 2 types of users: Non-Logged Users and Logged Users
- - Non-Logged Users will use the store Location from numTienda.php, while Logged Users will require signed up in the database prior, and will be using department id
- - Any user can create a ticket, it will be based on the Location even if the user is logged.
- - Tickets are displayed on index.php and ticket_table.php depending on the user session. They can be filtered, sortered and searched dynamically.
- - Each ticket provides a list of fields that can be accessed. It also features a Comment system for each ticket that can be used for any user.
- - Files can be uploaded on each ticket, be it when creating a ticket, or adding a comment. They have a standarized name and they'll be moved into 'adjuntos' folder.
- - Each ticket will need to be closed by Non-Logged User AND Logged User
- - Once both parties mark a ticket as solved, it will be hidden and no longer be displayed on the table (but still exists on the database)
- - Logged Users can also modify some fields on each ticket
- - Lastly, for logged users, they can do some quick changes on tickets on their department from the table
+# Features
 
-The folder named 'sql' has 3 files for the database
- - tables.sql: This being the main structure of the database. Includes a few entries for departments, categories and one super user.
- - rellenarincidencias.sql: It fills the table with some tickets with different fields, for testing purposes. Note that this script doesn't include any file attachment
- - rellenarusuarios.sql: It adds some users for some departments, for testing purposes.
+### English
+Key features of the application include:
 
-Esto es un sistema de gestión de tickets para cubrir las necesidades de Central Uniformes. Sus características son las siguientes:
- - Hay 2 tipos de usuarios: Los No-Logeados y los Logeados
- - Los usuarios No-Logeados usan la localización por defecto de numTienda.php, mientras que los usuarios Logueados necesitarán ser dados de alta en la base de datos con anterioridad, y usarán el id de su departamento.
- - Cualquier usuario puede crear un ticket, dependerá de la localización aunque el usuario esté logueado.
- - Los tickets se muestran en index.php y ticket_table.php dependiendo del tipo de sesión del usuario. Dichos tickets se pueden filtrar, ordenar y buscar dinámicamente.
- - Cada ticket contiene una lista de campos que se pueden acceder. Incluyen un sistema de comentario para cada ticket para cada tipo de usuario.
- - Se pueden subir archivos adjuntos, ya sea a la hora de crear el ticket, o al añadir comentarios. Tienen un nombre estandarizado y se moverán a una carpeta llamado 'adjuntos'.
- - Cada ticket necesita que el usuario No-Logueado y el usuario Logueado le den a Resuelto.
- - Cuando ambas partes hayan marcado una incidencia como resuelto, se ocultará y no se volverá a mostrar en la tabla (aunque seguirá existiendo en la base de datos)
- - Los usuarios Logueados pueden modificar algunos campos de cada ticket.
- - Por último, los usuarios logueados pueden realizar algunos cambios desde la tabla.
+**Incident Ticket Creation**: Users, both logged and non-logged, can create incident tickets. For non-logged users, ticket location is determined by the numTienda.php script, while logged users use department IDs.
 
-La carpeta llamada 'sql' tiene 3 archivos de base de datos
- - tables.sql: Es la estructura principal de la base de datos. Incluye algunas entradas para departamentos, categorías y un super usuario.
- - rellenarincidencias.sql: Rellena la tabla con algunos tickets con diversos campos, para hacer pruebas. Hay que tener en cuenta que este archivo no incluye archivos adjuntos.
- - rellenarusuarios.sql: Añade algunos usuarios para otros departamentos, para hacer pruebas.
+**Ticket Viewing and Management**: Users can view tickets from their respective departments, with options to sort and filter them based on various criteria.
+
+**Communication and File Attachment**: Users can engage in communication with their department to address ticket issues. Additionally, users have the ability to attach files to tickets and modify certain fields.
+
+**Ticket Closure**: Tickets can only be closed once both the department and the user mark them as completed. Closed tickets are not deleted from the database but are hidden from the frontend interface.
+
+
+## Database
+
+The 'sql' folder contains three essential files for database management:
+
+**tables.sql**: This file defines the core structure of the database, including entries for departments, categories, and a super user.
+
+**rellenarincidencias.sql**: It populates the database with sample tickets containing various fields for testing purposes. Note that this script does not include file attachments.
+
+**rellenarusuarios.sql**: This script adds sample users to different departments for testing purposes.
+
+-----
+
+### Spanish
+
+Las características clave de la aplicación incluyen:
+
+**Creación de tickets de incidente**: los usuarios, tanto registrados como no registrados, pueden crear tickets de incidente. Para los usuarios que no han iniciado sesión, la ubicación del ticket está determinada por el script numTienda.php, mientras que los usuarios registrados utilizan los ID de departamento.
+
+**Visualización y gestión de tickets**: los usuarios pueden ver los tickets de sus respectivos departamentos, con opciones para ordenarlos y filtrarlos según varios criterios.
+
+**Comunicación y archivos adjuntos**: los usuarios pueden comunicarse con su departamento para abordar problemas de tickets. Además, los usuarios tienen la posibilidad de adjuntar archivos a los tickets y modificar ciertos campos.
+
+**Cierre de Tickets**: Los tickets sólo se podrán cerrar una vez que tanto el departamento como el usuario los marquen como completados. Los tickets cerrados no se eliminan de la base de datos, pero se ocultan de la interfaz de usuario.
+
+
+## Base de datos
+
+La carpeta 'sql' contiene tres archivos esenciales para la gestión de bases de datos:
+
+**tables.sql**: este archivo define la estructura central de la base de datos, incluidas las entradas para departamentos, categorías y un superusuario.
+
+**rellenarincidencias.sql**: Llena la base de datos con tickets de muestra que contienen varios campos para fines de prueba. Tenga en cuenta que este script no incluye archivos adjuntos.
+
+**rellenarusuarios.sql**: Este script agrega usuarios de muestra a diferentes departamentos con fines de prueba.

@@ -2,7 +2,7 @@ function fetchDepartments() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText); // Log the response to check if it's received correctly
+            //console.log(this.responseText); // Log the response to check if it's received correctly
             var departamentos = JSON.parse(this.responseText);
             populateDepartments(departamentos);
             // Populate categories based on the default department

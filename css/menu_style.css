@@ -1,0 +1,95 @@
+.navbar-custom {
+  position: sticky;
+  background-color: #f8f9fa;
+  width: 100%;
+  margin-bottom: 2.5rem;
+}
+
+.navbar-brand img {
+  width: 72px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.navbar-nav .nav-link {
+  color: #343a40;
+  font-size: 1.25em;
+  margin-right: 12px;
+  margin-left: 8px;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 2em;
+  font-weight: 500;
+  text-align: center;
+  text-transform: uppercase;
+  margin-left: 10rem;
+}
+
+.LocationText {
+  text-align: center;
+  font-size: 1em;
+  color: #6c757d;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    display: block;
+    text-align: center;
+  }
+
+  .navbar-nav {
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .title {
+    display: inline-block;
+    margin-left: 10px;
+  }
+}
+
+/* Nav items hover effect */
+.underline {
+  display: inline;
+  position: relative;
+  overflow: hidden;
+}
+
+.underline:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  width: 0;
+  bottom: -5px;
+  background: #000;
+  height: 2px;
+  transition: width 0.4s ease-out;
+}
+
+.underline:hover:after,
+.underline:focus:after,
+.underline:active:after {
+  left: 0;
+  right: auto;
+  width: 100%;
+}
+
+/* Login button */
+.login {
+  width: 140px;
+  height: auto;
+  background-color: #96c565;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.login:hover {
+  background-color: inherit;
+  color: #96c565;
+  border: 3px solid #96c565;
+  transition: background-color 0.4s ease-out, color 0.4s ease-out,
+    border-color 0.4s ease-out;
+}

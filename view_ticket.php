@@ -10,152 +10,12 @@ ini_set('display_errors', 1);
     <head>
         <meta charset="UTF-8">
         <title>Detalles Ticket</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/view_ticket_style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <style>
-            body {
-                width: 100%;
-                margin: 0;
-                padding: 0;
-                overflow-x: hidden;
-            }
-
-            h1 {
-                text-align: center;
-                text-transform: uppercase;
-                font-weight: 900;
-                padding-top: 15px;
-                padding-bottom: 5px;
-            }
-
-            h3 {
-                text-align: center;
-                text-transform: uppercase;
-                border-bottom: 2px solid #c0c0c0;
-            }
-
-            h4 {
-                margin-left: 10px;
-            }
-
-            h5 {
-                margin-left: 10px;
-                font-size: 1.3em;
-                text-transform: uppercase;
-                font-weight: bold;
-                margin-left: 10px;
-                border-bottom: 2px solid #c0c0c0;
-            }
-
-            .formControl {
-                border-radius: 10px;
-                background-color: #f8f9fa;
-            }
-
-            label {
-                display: inline-block;
-                padding: 5px;
-            }
-
-            textarea {
-                width: 100%;
-                height: 100px;
-            }
-
-            .ticket {
-                font-weight: 400;
-                color: #3366cc;
-                font-size: 1.25em;
-                text-transform: uppercase;
-                padding: 10px;
-                margin-left: 10px;
-                margin-bottom: 15px;
-                align-items: center;
-            }
-
-            .ticketUnderline {
-                border-bottom: 1px solid #ccc;
-                margin-bottom: 10px;
-                width: 100%;
-            }
-
-            .ticketText {
-                font-size: 1.25em;
-                font-weight: 500;
-            }
-
-            .descText {
-                margin: 10px;
-                padding: 10px;
-                width: 95%;
-                height: 150px;
-                border: 1px solid #ccc;
-                resize: none;
-            }
-
-            .comment {
-                background-color: #ebebeb;
-                padding: 12.5px 0 12.5px 10px;
-                margin: 15px;
-                border-radius: 7px;
-            }
-
-            .ticketUnderline {
-                border-bottom: 1px solid #ccc;
-            }
-
-            a:link {
-                text-decoration: none;
-            }
-
-            a:visited {
-                text-decoration: none;
-            }
-
-            a:hover {
-                text-decoration: none;
-            }
-
-            a:active {
-                text-decoration: none;
-            }
-
-            select,
-            input[type="text"],
-            input[type="submit"],
-            input[type="button"],
-            input[type="file"] {
-                width: 100%;
-                padding: 12px;
-                margin-bottom: 10px;
-                box-sizing: border-box;
-            }
-
-            input[type="submit"],
-            input[type="button"] {
-                background-color: #4caf50;
-                color: white;
-                border: none;
-                cursor: pointer;
-                width: 100%;
-                color: white;
-                border-radius: 10px;
-            }
-
-            input[type="submit"]:hover,
-            input[type="button"]:hover {
-                background-color: #45a049;
-            }
-
-            @media (max-width: 767px) {
-                .textBreak {
-                    padding-left: 22.5px;
-                    display: block;
-                }
-            }
-        </style>
     </head>
 
     <body>
@@ -188,8 +48,8 @@ ini_set('display_errors', 1);
             $description = $row['descripcion'];
             $category = $row['categoria'];
             $status = $row['estado'];
-            $checkLocation =$row['check_usuario'];
-            $checkDept =$row['check_dept'];
+            $checkLocation = $row['check_usuario'];
+            $checkDept = $row['check_dept'];
             $ticketOpen = $row['fecha_creacion'];
             $lastUpdated = $row['fecha_actualizacion'];
             $hiddenTicket = $row['oculto'];
@@ -258,10 +118,7 @@ ini_set('display_errors', 1);
                         </div>
                         <div class="col-md-6">
                             <p class="text-md text-sm"><span class="ticket">Última Modificación:</span>
-                                <span class="ticketText textBreak"
-                                    style=""><?php echo $lastUpdated; ?></span>
-
-
+                                <span class="ticketText textBreak" style=""><?php echo $lastUpdated; ?></span>
                         </div>
                     </div>
                     <div class="row ticketUnderline">
@@ -388,7 +245,7 @@ ini_set('display_errors', 1);
                             <div class="row mt-4">
                                 <div class="col-md-12 d-flex justify-content-center">
                                     <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
-                                    <input type="submit" name="save" value="Guardar" class="btn btn-primary">
+                                    <input type="submit" name="save" value="Guardar" class="btn btn-success">
                                 </div>
                             </div>
                         </div>
@@ -424,7 +281,7 @@ ini_set('display_errors', 1);
                     } else {
                         $checkLocation = true;
                     }
-                
+
                     // Update the database based on the boolean values
                     if ($checkLocation) {
                         $timeTicketSolved = date("Y-m-d H:i:s");
@@ -439,7 +296,7 @@ ini_set('display_errors', 1);
                             echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
                         }
                     }
-                
+
                     if ($checkDept) {
                         $timeTicketSolved = date("Y-m-d H:i:s");
                         $sql = "UPDATE tickets SET check_dept = '1', estado = 'Cerrado', fecha_actualizacion = '$timeTicketSolved' WHERE id_ticket = $ticketId";
@@ -471,7 +328,7 @@ ini_set('display_errors', 1);
                 <!-- Button to close the ticket -->
                 <form method="post">
                     <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
-                    <input type="submit" name="close_ticket" value="Marcar como Resuelto" class="btn btn-primary">
+                    <input type="submit" name="close_ticket" value="Marcar como Resuelto" class="markCompletedBtn">
                 </form>
             </div>
             <div class="col-lg-6">
@@ -541,7 +398,8 @@ ini_set('display_errors', 1);
                         <div class="col-md-3">
                             <div class="mb-2">
                                 <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
-                                <input type="submit" name="submit_comment" value="Enviar" class="btn btn-primary">
+                                <input type="submit" name="submit_comment" value="Enviar"
+                                    class="custom-button btn btn-primary">
                             </div>
                         </div>
                 </div>
@@ -613,14 +471,14 @@ ini_set('display_errors', 1);
                             }
                         }
                         if (!$errorFound) {
-                            alert('Mensaje enviado correctamente.');
+                            echo "<script>alert('Mensaje enviado correctamente.');</script>";
                             echo "<script>window.location.href = 'ticket_table.php';</script>";
                         } else {
                             // Delete the message if there's any error with files
                             $sql = "DELETE FROM mensajes WHERE id_mensaje = $commentId";
                             $conn->query($sql);
-                            alert('Error al enviar mensaje.');
-                            "<script>window.location.href = 'ticket_table.php';</script>";
+                            echo "<script>alert('Error al enviar mensaje.');</script>";
+                            echo "<script>window.location.href = 'ticket_table.php';</script>";
                         }
                     } else {
                         // Error occurred while inserting comment

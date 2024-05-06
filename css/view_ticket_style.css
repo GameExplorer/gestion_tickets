@@ -105,36 +105,25 @@ a:active {
   text-decoration: none;
 }
 
-select,
-input[type="text"],
-input[type="submit"],
-input[type="button"],
-input[type="file"] {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-}
-
-input[type="submit"],
-input[type="button"] {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  color: white;
-  border-radius: 10px;
-}
-
-input[type="submit"]:hover,
-input[type="button"]:hover {
-  background-color: #45a049;
-}
-
 @media (max-width: 767px) {
   .textBreak {
     padding-left: 22.5px;
     display: block;
   }
+}
+
+.markCompletedBtn {
+  background-color: #4caf50;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  float: right;
+  padding: 15px;
+}
+
+.custom-button {
+  width: 150px;
+  height: 50px;
 }

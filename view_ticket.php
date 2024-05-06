@@ -398,8 +398,7 @@ ini_set('display_errors', 1);
                         <div class="col-md-3">
                             <div class="mb-2">
                                 <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
-                                <input type="submit" name="submit_comment" value="Enviar"
-                                    class="custom-button btn btn-primary">
+                                <input type="submit" name="submit_comment" value="Enviar" class="send-button btn btn-primary">
                             </div>
                         </div>
                 </div>

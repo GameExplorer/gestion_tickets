@@ -121,9 +121,13 @@ a:active {
   text-transform: uppercase;
   float: right;
   padding: 15px;
+  margin-bottom: 25px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 
-.custom-button {
+.send-button {
   width: 150px;
   height: 50px;
+  margin-left: 10px;
 }

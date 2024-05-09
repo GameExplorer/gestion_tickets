@@ -30,15 +30,39 @@ include 'includes/connection.php';
         $_REQUEST['estado'] = 'Abierto';
 
         if ($statusFilter) {
-            $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
+
+            if (isset($_SESSION['loggedin'])) {
+                // User is logged in, retrieve department ID
+                $departmentID = $_SESSION['department_id'];
+                if ($departmentID == 0) {
+                    $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
+                FROM tickets
+                INNER JOIN departamentos ON tickets.id_departamento = departamentos.id_departamento
+                LEFT JOIN archivos ON tickets.id_ticket = archivos.id_ticket
+                WHERE tickets.oculto = 0 AND estado = '$statusFilter'
+                GROUP BY tickets.id_ticket
+                ORDER BY tickets.titulo ASC";
+
+                } else {
+                    $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
             FROM tickets
             INNER JOIN departamentos ON tickets.id_departamento = departamentos.id_departamento
             LEFT JOIN archivos ON tickets.id_ticket = archivos.id_ticket
-            WHERE estado = '$statusFilter'
+            WHERE tickets.id_departamento = $departmentID AND tickets.oculto = 0 AND estado = '$statusFilter'
             GROUP BY tickets.id_ticket";
+                }
+            } else {
+                // User is not logged in, retrieve tickets by location only
+                $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
+            FROM tickets
+            INNER JOIN departamentos ON tickets.id_departamento = departamentos.id_departamento
+            LEFT JOIN archivos ON tickets.id_ticket = archivos.id_ticket
+            WHERE tickets.localizacion = '$nombre' AND tickets.oculto = 0 AND estado = '$statusFilter'
+            GROUP BY tickets.id_ticket";
+            }
         }
 
-        include 'includes/tickets.php';
+        include 'tickets.php';
 
         ?>
 

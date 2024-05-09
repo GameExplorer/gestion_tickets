@@ -62,7 +62,7 @@ include 'includes/connection.php';
             }
         }
 
-        include 'tickets.php';
+        include 'includes/tickets.php';
 
         ?>
 

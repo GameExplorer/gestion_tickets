@@ -135,9 +135,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <?php endif; ?>
                                     <label class="btn btn-success"
                                         style="background-color: #4caf50; color: white; border:none;">
-                                        <i class="fa fa-image"></i> Escoge un archivo<input type="file" id="attachment"
-                                            name="attachment[]" accept=".pdf, .png, .jpg, .jpeg" class="form-control"
-                                            style="display: none;" name="image">
+                                        <i class="fa fa-image"></i> <span id="file-label">Escoge un archivo</span>
+                                        <input type="file" id="attachment" name="attachment[]"
+                                            accept=".pdf, .png, .jpg, .jpeg" class="form-control" style="display: none;"
+                                            onchange="updateFileName(this)">
                                     </label>
                                 </div>
                             </div>
@@ -179,6 +180,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </html>
 <script>
+    function updateFileName(input) {
+        var fileName = "Escoge un archivo"; 
+        if (input.files && input.files.length > 0) {
+            fileName = input.files[0].name;
+        }
+        document.getElementById("file-label").innerText = fileName;
+    }
     function goToTicketTable() {
         window.location.href = 'ticket_table.php';
     }

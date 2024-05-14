@@ -349,7 +349,7 @@ ini_set('display_errors', 1);
                     echo "<h5 class=''>Archivos Adjuntos</h5>";
                     echo "<ul>";
                     foreach ($attachments as $attachment) {
-                        echo "<li><a href='uploads/" . $attachment['nombre_archivo'] . "' target='_blank'>" . $attachment['nombre_archivo'] . "</a></li>";
+                        echo "<li><a href='adjuntos/" . $attachment['nombre_archivo'] . "' target='_blank'>" . $attachment['nombre_archivo'] . "</a></li>";
                     }
                     echo "</ul>";
                 }

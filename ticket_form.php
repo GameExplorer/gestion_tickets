@@ -143,7 +143,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="col-12 col-sm-3 order-sm-2 order-2">
                                 <button type="button" onclick="addAttachment()" class="btn btn-primary"
-                                    data-buttonText="Your label here."
                                     style="background-color: #4caf50; color: white; border: none; cursor: pointer; width: auto; height:auto; margin-left: 10px;">
                                     Añadir otro
                                 </button>

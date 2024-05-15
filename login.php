@@ -34,9 +34,6 @@ include 'includes/connection.php';
                 <input type="checkbox" class="show-password"
                     onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'"> Mostrar contraseña<br>
                 <?php
-                session_start();
-
-                include 'includes/connection.php';
 
                 if (isset($_POST['login'])) {
                     // Get the form data

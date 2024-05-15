@@ -24,6 +24,7 @@ session_start();
         include 'includes/connection.php';
         // Retrieve user's location using functions from numTienda.php
         require_once 'includes/numTienda.php';
+        require_once 'includes/timezone_setting.php';
         $nombre = $sede[$n];
 
         if (isset($_GET['order'])) {

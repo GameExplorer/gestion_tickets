@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php
         $pageTitle = "CREAR TICKET";
         include 'includes/menu.php';
+        require_once 'includes/timezone_setting.php';
         ?>
         <div class="container">
             <form action="includes/submit_ticket.php" method="post" enctype="multipart/form-data" class="incident-form">

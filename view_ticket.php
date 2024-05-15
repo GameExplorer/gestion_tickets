@@ -25,6 +25,7 @@ ini_set('display_errors', 1);
         include 'includes/menu.php';
         include 'includes/connection.php';
         include 'includes/upload_config.php';
+        require_once 'includes/timezone_setting.php';
 
         $errorFound = false;
 
@@ -285,7 +286,7 @@ ini_set('display_errors', 1);
                     // Update the database based on the boolean values
                     if ($checkLocation) {
                         $timeTicketSolved = date("Y-m-d H:i:s");
-                        $sql = "UPDATE tickets SET check_usuario = '1', estado = 'Cerrado', fecha_actualizacion = '$timeTicketSolved' WHERE id_ticket = $ticketId";
+                        $sql = "UPDATE tickets SET check_usuario = '1', fecha_actualizacion = '$timeTicketSolved' WHERE id_ticket = $ticketId";
                         if ($conn->query($sql) === TRUE) {
                             // Insert a message into the mensajes table
                             $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES ($ticketId, 'Sistema', 'La localización ha marcado la incidencia como Resuelto', '$timeTicketSolved')";
@@ -299,7 +300,7 @@ ini_set('display_errors', 1);
 
                     if ($checkDept) {
                         $timeTicketSolved = date("Y-m-d H:i:s");
-                        $sql = "UPDATE tickets SET check_dept = '1', estado = 'Cerrado', fecha_actualizacion = '$timeTicketSolved' WHERE id_ticket = $ticketId";
+                        $sql = "UPDATE tickets SET check_dept = '1', fecha_actualizacion = '$timeTicketSolved' WHERE id_ticket = $ticketId";
                         if ($conn->query($sql) === TRUE) {
                             // Insert a message into the mensajes table
                             $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES ($ticketId, 'Sistema', 'El Departamento ha marcado la incidencia como Resuelto', '$timeTicketSolved')";

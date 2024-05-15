@@ -5,6 +5,7 @@
     include 'connection.php';
     include 'numTienda.php';
     include 'upload_config.php';
+    require_once 'timezone_setting.php';
 
     // Process form submission
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

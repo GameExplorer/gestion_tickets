@@ -1,5 +1,6 @@
 <?php
 include 'connection.php';
+require_once 'timezone_setting.php';
 
 $incident_id = $_POST['incident_id'];
 $status = $_POST['status'];

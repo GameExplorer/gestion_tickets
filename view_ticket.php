@@ -350,7 +350,7 @@ ini_set('display_errors', 1);
                     echo "<h5 class=''>Archivos Adjuntos</h5>";
                     echo "<ul>";
                     foreach ($attachments as $attachment) {
-                        echo "<li><a href='adjuntos/" . $attachment['nombre_archivo'] . "' target='_blank'>" . $attachment['nombre_archivo'] . "</a></li>";
+                        echo "<li><a href='" . $targetDir . $attachment['nombre_archivo'] . "' target='_blank'>" . $attachment['nombre_archivo'] . "</a></li>";
                     }
                     echo "</ul>";
                 }
@@ -436,7 +436,13 @@ ini_set('display_errors', 1);
 
                     if ($stmt->execute()) {
                         $commentId = $conn->insert_id; // Get the ID of the inserted comment
-                
+                        // Define the target directory
+                        //$targetDir = realpath(__DIR__ . $targetDir) . DIRECTORY_SEPARATOR;
+
+                        // Ensure the target directory exists; if not, create it
+                        if (!file_exists($targetDir) && !mkdir($targetDir, 0777, true)) {
+                            die('Failed to create target directory: ' . $targetDir);
+                        }
                         // Handle file uploads
                         foreach ($_FILES['attachment']['name'] as $key => $fileName) {
                             if ($_FILES['attachment']['size'][$key] > 0) {
@@ -447,18 +453,18 @@ ini_set('display_errors', 1);
                                     $errorFound = true;
                                     break;
                                 }
-
+                        
                                 // Rename file
                                 $newFileName = "ticket" . $ticketId . "_mensaje" . $commentId . "." . $fileType;
                                 $targetFilePath = $targetDir . $newFileName;
-
+                        
                                 // Check file size
                                 if ($_FILES['attachment']['size'][$key] > $maxFileSizeMB * 1024 * 1024) {
                                     echo "<script>alert('" . $errorMessages['fileSizeExceedLimit'] . "');</script>";
                                     $errorFound = true;
                                     break;
                                 }
-
+                                echo "Target File Path: " . $targetFilePath . "<br>";
                                 if (move_uploaded_file($_FILES['attachment']['tmp_name'][$key], $targetFilePath)) {
                                     // Insert attachment details into database
                                     $sql = "INSERT INTO archivos (id_ticket, nombre_archivo) VALUES ('$ticketId', '$newFileName')";

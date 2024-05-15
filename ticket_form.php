@@ -136,33 +136,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <label class="btn btn-success"
                                         style="background-color: #4caf50; color: white; border:none;">
                                         <i class="fa fa-image"></i> <span id="file-label">Escoge un archivo</span>
-                                        <input type="file" id="attachment" name="attachment[]"
-                                            accept=".pdf, .png, .jpg, .jpeg" class="form-control" style="display: none;"
-                                            onchange="updateFileName(this)">
+                                        <input type="file" id="attachment" name="attachment[]" accept=".pdf, .png, .jpg, .jpeg" class="form-control" style="display: none;" onchange="updateFileName(this)">
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-3 order-sm-2 order-2">
-                                <button type="button" onclick="addAttachment()" class="btn btn-primary"
-                                    style="background-color: #4caf50; color: white; border: none; cursor: pointer; width: auto; height:auto; margin-left: 10px;">
-                                    Añadir otro
-                                </button>
+                            <button id="addAttachmentButton" class="btn btn-primary" style="background-color: #4caf50; color: white; border: none; cursor: pointer; width: auto; height:auto; margin-left: 10px;" onclick="addAttachment(event)">Añadir otro</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <script>
-                    function addAttachment() {
-                        var container = document.getElementById('attachment-container');
-                        var newInput = document.createElement('input');
-                        newInput.type = 'file';
-                        newInput.name = 'attachment[]';
-                        newInput.accept = '.pdf, .png, .jpg, .jpeg';
-                        container.appendChild(newInput);
-                        container.appendChild(document.createElement('br'));
-                    }
-                </script>
+    function addAttachment(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        var container = document.getElementById('attachment-container');
+
+        var newLabel = document.createElement('label');
+        newLabel.className = 'btn btn-success';
+        newLabel.style = 'background-color: #4caf50; color: white; border:none; margin-top: 15px;';
+
+        var icon = document.createElement('i');
+        icon.className = 'fa fa-image';
+        newLabel.appendChild(icon);
+
+        var newText = document.createTextNode('Escoge un archivo');
+        newLabel.appendChild(newText);
+
+        var newInput = document.createElement('input');
+        newInput.type = 'file';
+        newInput.name = 'attachment[]';
+        newInput.accept = '.pdf, .png, .jpg, .jpeg';
+        newInput.className = 'form-control';
+        newInput.style = 'display: none;';
+        newInput.addEventListener('change', function () {
+            updateFileName(this);
+        });
+
+        newLabel.appendChild(newInput);
+
+        container.appendChild(newLabel);
+    }
+</script>
 
                 <!-- Submit and Back Button -->
                 <div class="row mb-3">
@@ -185,9 +202,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (input.files && input.files.length > 0) {
             fileName = input.files[0].name;
         }
-        document.getElementById("file-label").innerText = fileName;
-    }
-    function goToTicketTable() {
-        window.location.href = 'ticket_table.php';
+        // Find the parent label element of the input
+        var parentLabel = input.parentNode;
+        // Update the text of the label element
+        parentLabel.childNodes.forEach(function(node) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                node.textContent = fileName;
+            }
+        });
     }
 </script>

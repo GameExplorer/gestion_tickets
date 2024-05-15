@@ -32,7 +32,7 @@ td {
 
 th {
   padding: 5px 10px 5px 10px;
-  width: 125px;
+  width: 200px;
   font-size: 1em;
   display: table-cell;
   text-transform: uppercase;
@@ -42,11 +42,11 @@ th {
 }
 
 th:nth-child(10) {
-  width: 100px;
+  width: 120px;
 }
 
 th:last-child {
-  width: 400px;
+  width: 200px;
 }
 
 th:nth-child(even) {

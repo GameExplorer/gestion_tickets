@@ -14,7 +14,6 @@ function getSortUrl($column)
 {
     global $order, $sort;
     $newSort = ($order === $column && $sort === 'ASC') ? 'DESC' : 'ASC';
-    return "ticket_table.php?order=$column&sort=$newSort";
 }
 
 if ($result->num_rows > 0) {
@@ -22,17 +21,17 @@ if ($result->num_rows > 0) {
     echo "<table id='myTable'>";
     echo "<thead>";
     echo "<tr>";
-    echo "<th><a cla ss='sort-by' href='ticket_table.php?order=id_ticket&sort=$newSort'>ID Ticket</a></th>";
-    echo "<th><a class='sort-by' href='ticket_table.php?order=nombre&sort=$newSort'>Nombre</a></th>";
-    echo "<th><a class='sort-by' href='ticket_table.php?order=localizacion&sort=$newSort'>Localización</a></th>";
-    echo "<th><a class='sort-by' href='ticket_table.php?order=nombre_departamento&sort=$newSort'>Departamento</a></th>";
-    echo "<th><a class='sort-by' href='ticket_table.php?order=titulo&sort=$newSort'>Título</a></th>";
-    echo "<th><a class='sort-by' href='ticket_table.php?order=fecha_creacion&sort=$newSort'>Fecha Creación</a></th>";
-    echo "<th><a class='sort-by' href='ticket_table.php?order=estado&sort=$newSort'>Estado</a></th>";
-    echo "<th><a class='sort-by' href='ticket_table.php?order=prioridad&sort=$newSort'>Prioridad</a></th>";
-    echo "<th><a class='sort-by' href='ticket_table.php?order=fecha_actualizacion&sort=$newSort .'>Fecha Actualización</a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='0'>ID Ticket <i class='fas fa-sort'></i></a></th>";
+    echo "<th><a href='#' data-column='1'>Nombre <i class='fas fa-sort'></i></a></th>";
+    echo "<th><a href='#' data-column='2'>Localización <i class='fas fa-sort'></i></a></th>";
+    echo "<th><a href='#' data-column='3'>Departamento <i class='fas fa-sort'></i></a></th>";
+    echo "<th><a href='#' data-column='4'>Título <i class='fas fa-sort'></i></a></th>";
+    echo "<th><a href='#' data-column='5'>Fecha Creación <i class='fas fa-sort'></i></a></th>";
+    echo "<th><a href='#' data-column='6'>Estado <i class='fas fa-sort'></i></a></th>";
+    echo "<th><a href='#' data-column='7'>Prioridad <i class='fas fa-sort'></i></a></th>";
+    echo "<th><a href='#' data-column='8'>Fecha Actualización <i class='fas fa-sort'></i></a></th>";
     echo "<th>Archivos</th>";
-    echo "<th></th> ";
+    echo "<th></th>";
     echo "</tr>";
 
     // Add dropdowns for filtering above each column header
@@ -151,16 +150,14 @@ if ($result->num_rows > 0) {
         }
         echo "</td>";
 
-        echo "<td class='button-group'>";
-        //echo "<button class='tableButtons' onclick=\"viewTicketDetails(" . $row["id_ticket"] . ")\">DETALLES</button>";
+        echo "<td class='button-group m-2'>";
         echo '<form action="view_ticket.php" method="post">' .
             '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
             '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
             '</form>';
-        //non logged -users shouldn't see this button and the status select button
+        //non logged - users shouldn't see this button and the status select button
         if (isset($_SESSION['loggedin'])) {
-
-            echo "<select class='status-select'>";
+            echo "<select class='status-select p-2'>";
             echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
             echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
             echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
@@ -194,6 +191,40 @@ $conn->close();
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+        // Function to sort table rows
+        function sortTable(columnIndex, order) {
+            const table = document.getElementById('myTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = Array.from(tbody.getElementsByTagName('tr'));
+
+            // Sort the rows based on the content of the specified column
+            rows.sort((a, b) => {
+                const aValue = a.getElementsByTagName('td')[columnIndex].textContent.trim();
+                const bValue = b.getElementsByTagName('td')[columnIndex].textContent.trim();
+
+                return isNaN(aValue) ? aValue.localeCompare(bValue) : aValue - bValue;
+            });
+
+            // Reverse the order if sorting is in DESC order (ASC order now)
+            if (order === 'DESC') {
+                rows.reverse();
+            }
+
+            // Re-append sorted rows to tbody
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // Add click event listeners to table headers for sorting
+        const headers = document.querySelectorAll('#myTable th');
+        headers.forEach((header, index) => {
+            header.addEventListener('click', function () {
+                const columnIndex = index; // Index of the clicked column
+                const order = this.dataset.sort === 'DESC' ? 'ASC' : 'DESC'; // Toggle sorting order
+                sortTable(columnIndex, order);
+                this.dataset.sort = order; // Update sorting order in dataset
+            });
+        });
+
         const statusSelects = document.querySelectorAll('.status-select');
         statusSelects.forEach(select => {
             select.addEventListener('change', function () {

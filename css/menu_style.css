@@ -50,33 +50,6 @@
   }
 }
 
-/* Nav items hover effect */
-.underline {
-  display: inline;
-  position: relative;
-  overflow: hidden;
-}
-
-.underline:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  right: 0;
-  width: 0;
-  bottom: -5px;
-  background: #000;
-  height: 2px;
-  transition: width 0.4s ease-out;
-}
-
-.underline:hover:after,
-.underline:focus:after,
-.underline:active:after {
-  left: 0;
-  right: auto;
-  width: 100%;
-}
-
 /* Login button */
 .login {
   width: 140px;

@@ -11,17 +11,164 @@ ini_set('display_errors', 1);
         <meta charset="UTF-8">
         <title>Detalles Ticket</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/view_ticket_style.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/view_ticket_style.css" <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+            body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden;
+            }
+
+            h1 {
+                text-align: center;
+                text-transform: uppercase;
+                font-weight: 900;
+                padding-top: 15px;
+                padding-bottom: 5px;
+            }
+
+            h3 {
+                text-align: center;
+                text-transform: uppercase;
+                border-bottom: 2px solid #c0c0c0;
+            }
+
+            h4 {
+                margin-left: 10px;
+            }
+
+            h5 {
+                margin-left: 10px;
+                font-size: 1.3em;
+                text-transform: uppercase;
+                font-weight: bold;
+                margin-left: 10px;
+                border-bottom: 2px solid #c0c0c0;
+            }
+
+            .formControl {
+                border-radius: 5px;
+                padding-top: 7px;
+                padding-bottom: 7px;
+                background-color: #f8f9fa;
+            }
+
+            label {
+                display: inline-block;
+                padding: 5px;
+            }
+
+            textarea {
+                width: 100%;
+                height: 100px;
+            }
+
+            .ticket {
+                font-weight: 400;
+                color: #3366cc;
+                font-size: 1.25em;
+                text-transform: uppercase;
+                padding: 10px;
+                margin-left: 10px;
+                margin-bottom: 15px;
+                align-items: center;
+            }
+
+            .ticketUnderline {
+                border-bottom: 1px solid #ccc;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            .ticketText {
+                font-size: 1.25em;
+                font-weight: 500;
+            }
+
+            .descText {
+                margin: 10px;
+                padding: 10px;
+                width: 95%;
+                height: 150px;
+                border: 1px solid #ccc;
+                resize: none;
+            }
+
+            .comment {
+                background-color: #ebebeb;
+                padding: 12.5px 0 12.5px 10px;
+                margin: 15px;
+                border-radius: 7px;
+            }
+
+            .ticketUnderline {
+                border-bottom: 1px solid #ccc;
+            }
+
+            a:link {
+                text-decoration: none;
+            }
+
+            a:visited {
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: none;
+            }
+
+            a:active {
+                text-decoration: none;
+            }
+
+            @media (max-width: 767px) {
+                .textBreak {
+                    padding-left: 22.5px;
+                    display: block;
+                }
+            }
+
+            .markCompletedBtn {
+                background-color: #4caf50;
+                border: none;
+                border-radius: 7px;
+                color: white;
+                font-weight: 600;
+                text-transform: uppercase;
+                float: right;
+                padding: 15px;
+                margin-top: 50px;
+                margin-bottom: 25px;
+                margin-left: 40px;
+            }
+
+            .guardarbtn {
+                text-transform: uppercase;
+                float: right;
+                border-radius: 7px;
+                margin-top: 50px;
+                margin-bottom: 25px;
+                margin-right: 10px;
+                margin-left: 10px;
+            }
+
+            .send-button {
+                width: 150px;
+                height: 50px;
+                margin-left: 10px;
+            }
+        </style>
     </head>
 
     <body>
 
         <?php
-        $pageTitle = "Información Ticket";
+        $pageTitle = "Detaille Ticket";
         include 'includes/menu.php';
         include 'includes/connection.php';
         include 'includes/upload_config.php';
@@ -108,28 +255,34 @@ ini_set('display_errors', 1);
                 <h1 class="ticketUnderline"><?php echo $title; ?></h1>
                 <div class="ticketUnderline">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-2">
                             <p class="text-md text-sm"><span class="ticket">ID:</span> <span
                                     class="ticketText"><?php echo $ticketId; ?></span>
                             </p>
                         </div>
-                        <div class="col-md-6">
-                            <p class="text-md text-sm"><span class="ticket">Fecha Creación:</span> <span
-                                    class="ticketText"><?php echo $ticketOpen; ?></span></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="text-md text-sm"><span class="ticket">Última Modificación:</span>
-                                <span class="ticketText textBreak" style=""><?php echo $lastUpdated; ?></span>
-                        </div>
-                    </div>
-                    <div class="row ticketUnderline">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <p><span class="ticket">Nombre:</span> <span class="ticketText"><?php echo $name; ?></span>
                             </p>
                         </div>
                         <div class="col-md-6">
-                            <p><span class="ticket ">Localización:</span> <span class="ticketText textBreak"
-                                    style="padding-left:22.5px; "><?php echo $location; ?></span>
+                            <p class="text-md text-sm"><span class="ticket">Fecha Creación:</span> <span
+                                    class="ticketText"><?php echo $ticketOpen; ?></span>
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="row ticketUnderline">
+                        <div class="col-md-6 order-1 order-md-2">
+                            <p class="text-md text-sm">
+                                <span class="ticket">Última Modificación:</span>
+                                <span class="ticketText textBreak" style=""><?php echo $lastUpdated; ?></span>
+                            </p>
+                        </div>
+                        <div class="col-md-6 order-2 order-md-1">
+                            <p>
+                                <span class="ticket">Localización:</span>
+                                <span class="ticketText textBreak"
+                                    style="padding-left: 22.5px;"><?php echo $location; ?></span>
                             </p>
                         </div>
                     </div>
@@ -151,7 +304,7 @@ ini_set('display_errors', 1);
                     <form method="post">
                         <div>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-3 ">
                                     <label for="priority">Priority:</label>
                                     <select name="priority" id="priority" class="formControl">
                                         <option value="Nuevo" <?php if ($priority == "Nuevo")
@@ -167,7 +320,7 @@ ini_set('display_errors', 1);
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="department">Departamento:</label>
+                                    <label for="department">Dept:</label>
                                     <select name="department" id="department" class="formControl">
                                         <?php
                                         // Retrieve departments from the database and populate the dropdown menu
@@ -246,8 +399,13 @@ ini_set('display_errors', 1);
                             <div class="row mt-4">
                                 <div class="col-md-12 d-flex justify-content-center">
                                     <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
-                                    <input type="submit" name="save" value="Guardar" class="btn btn-success">
-                                </div>
+                                    <input type="submit" name="save" value="Guardar" class="guardarbtn btn btn-success">
+                                    <form method="post">
+                                        <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
+                                        <input type="submit" name="close_ticket" value="Marcar como Resuelto"
+                                            class="markCompletedBtn">
+                                    </form>
+                                </div> <!-- Button to close the ticket -->
                             </div>
                         </div>
                     </form>
@@ -326,11 +484,6 @@ ini_set('display_errors', 1);
                 }
                 ?>
 
-                <!-- Button to close the ticket -->
-                <form method="post">
-                    <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
-                    <input type="submit" name="close_ticket" value="Marcar como Resuelto" class="markCompletedBtn">
-                </form>
             </div>
             <div class="col-lg-6">
 
@@ -383,7 +536,7 @@ ini_set('display_errors', 1);
                         echo "</div>";
                     }
                 } else {
-                    echo "<p>No se han encontrado mensajes.</p>";
+                    echo "<p class='px-3'>No se han encontrado mensajes.</p>";
                 }
                 ?>
                 <div class="col-md-12">
@@ -399,7 +552,8 @@ ini_set('display_errors', 1);
                         <div class="col-md-3">
                             <div class="mb-2">
                                 <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
-                                <input type="submit" name="submit_comment" value="Enviar" class="send-button btn btn-primary">
+                                <input type="submit" name="submit_comment" value="Enviar"
+                                    class="send-button btn btn-primary">
                             </div>
                         </div>
                 </div>
@@ -438,7 +592,7 @@ ini_set('display_errors', 1);
                         $commentId = $conn->insert_id; // Get the ID of the inserted comment
                         // Define the target directory
                         //$targetDir = realpath(__DIR__ . $targetDir) . DIRECTORY_SEPARATOR;
-
+                
                         // Ensure the target directory exists; if not, create it
                         if (!file_exists($targetDir) && !mkdir($targetDir, 0777, true)) {
                             die('Failed to create target directory: ' . $targetDir);
@@ -453,11 +607,11 @@ ini_set('display_errors', 1);
                                     $errorFound = true;
                                     break;
                                 }
-                        
+
                                 // Rename file
                                 $newFileName = "ticket" . $ticketId . "_mensaje" . $commentId . "." . $fileType;
                                 $targetFilePath = $targetDir . $newFileName;
-                        
+
                                 // Check file size
                                 if ($_FILES['attachment']['size'][$key] > $maxFileSizeMB * 1024 * 1024) {
                                     echo "<script>alert('" . $errorMessages['fileSizeExceedLimit'] . "');</script>";

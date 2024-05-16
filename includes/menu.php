@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,16 +14,43 @@
 
     <body>
 
-        <?php include 'numTienda.php'; ?>
+        <?php
+        include 'numTienda.php';
+        include 'connection.php';
+        if (isset($_SESSION['loggedin'])) {
+
+            $user = $_SESSION['username'];
+            $deptId = $_SESSION['department_id'];
+            $stmt = mysqli_prepare($conn, "SELECT nombre_departamento FROM departamentos WHERE id_departamento = ?");
+            mysqli_stmt_bind_param($stmt, "i", $deptId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result && mysqli_num_rows($result) > 0) {
+                $deptRow = mysqli_fetch_assoc($result);
+                $dept = $deptRow['nombre_departamento'];
+            } else {
+                $dept = "Unknown Department";
+            }
+
+            mysqli_stmt_close($stmt);
+        }
+        ?>
+
 
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">
                     <img src="assets/CentralUniformesLogo.png" alt="Central Uniformes Logo" width="72" height="72">
                 </a>
-                <div class="LocationText">
-                    <?php echo "Sede: $nombre"; ?>
-                </div>
+                <?php
+                if (isset($_SESSION['loggedin'])) {
+                    echo "Hola $user, $dept";
+                } else {
+                    echo "<div class='LocationText'>Sede: $nombre</div>";
+                }
+                ?>
+
                 <div class="title"><?php echo $pageTitle; ?></div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -40,7 +66,7 @@
                             <a class="nav-link underline" href="ticket_form.php">Nuevo Ticket</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link underline" href="ticket_table.php">Ver Tickets</a>
+                            <a class="nav-link underline" href="ticket_table.php">Ver Tickets</a>
                         </li>
                     </ul>
                     <div></div>

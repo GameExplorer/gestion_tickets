@@ -40,7 +40,9 @@ if ($result->num_rows > 0) {
     echo "<td><input type='text' class='filter-input' data-column='1'></td>"; //User column
 
     // Location filter column
-    echo "<td><select class='filter-select' data-column='2'>
+    if (isset($_SESSION['loggedin'])) {
+
+        echo "<td><select class='filter-select' data-column='2'>
                 <option value=''>Todo</option>
                 <option value='Almacén Central'>Almacén Central</option>
                 <option value='Las Palmas'>Las Palmas</option>
@@ -63,22 +65,30 @@ if ($result->num_rows > 0) {
                 <option value='Arguineguín'>Arguineguín</option>
                 <option value='Jinamar'>Jinamar</option>
                 </select></td>";
-
-    // Department filter column
-    echo "<td><select class='filter-select' data-column='3'>";
-    echo "<option value=''>Todo</option>";
-
-    $departmentQuery = "SELECT nombre_departamento FROM departamentos WHERE id_departamento != 0";
-    $departmentResult = $conn->query($departmentQuery);
-
-    if ($departmentResult->num_rows > 0) {
-        while ($departmentRow = $departmentResult->fetch_assoc()) {
-            $departmentName = $departmentRow['nombre_departamento'];
-            echo "<option value='$departmentName'>$departmentName</option>";
-        }
+    } else {
+        echo "<td></td>";
     }
 
-    echo "</select></td>";
+    // Department filter column
+    if (isset($_SESSION['loggedin'])) {
+        echo "<td></td>";
+
+    } else {
+        echo "<td><select class='filter-select' data-column='3'>";
+        echo "<option value=''>Todo</option>";
+
+        $departmentQuery = "SELECT nombre_departamento FROM departamentos WHERE id_departamento != 0";
+        $departmentResult = $conn->query($departmentQuery);
+
+        if ($departmentResult->num_rows > 0) {
+            while ($departmentRow = $departmentResult->fetch_assoc()) {
+                $departmentName = $departmentRow['nombre_departamento'];
+                echo "<option value='$departmentName'>$departmentName</option>";
+            }
+        }
+        echo "</select></td>";
+
+    }
     echo "<td><input type='text' class='filter-input' data-column='4'></td>"; // Title column
 
     // Date filter column

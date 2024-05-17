@@ -40,7 +40,7 @@
                 margin-left: 10rem;
             }
 
-            .LocationText {
+            .headerText {
                 text-align: center;
                 font-size: 1em;
                 color: #6c757d;
@@ -139,16 +139,17 @@
                 <a class="navbar-brand" href="index.php">
                     <img src="assets/CentralUniformesLogo.png" alt="Central Uniformes Logo" width="72" height="72">
                 </a>
-                <?php
-                if (isset($_SESSION['loggedin'])) {
-                    echo "Hola $user, $dept";
-                } else {
-                    echo "<div class='LocationText'>Sede: $nombre</div>";
-                }
-                ?>
-
+                <div class="headerText">
+                    <?php
+                    if (isset($_SESSION['loggedin'])) {
+                        echo "Hola $user, $dept";
+                    } else {
+                        echo "Sede: $nombre";
+                    }
+                    ?>
+                </div>
                 <div class="title"><?php echo $pageTitle; ?></div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <button class="navbar-toggler order-3" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

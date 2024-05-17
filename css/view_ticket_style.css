@@ -34,7 +34,8 @@ h5 {
 
 .formControl {
   border-radius: 5px;
-  padding: 2.5px;
+  padding-top: 7px;
+  padding-bottom: 7px;
   background-color: #f8f9fa;
 }
 
@@ -121,9 +122,10 @@ a:active {
   font-weight: 600;
   text-transform: uppercase;
   float: right;
+  padding: 15px;
   margin-top: 50px;
   margin-bottom: 25px;
-  margin-left: 50px;
+  margin-left: 30px;
 }
 
 .guardarbtn {
@@ -132,7 +134,8 @@ a:active {
   border-radius: 7px;
   margin-top: 50px;
   margin-bottom: 25px;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 10px;
 }
 
 .send-button {

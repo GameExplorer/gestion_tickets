@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,13 +20,17 @@ session_start();
 
     <body>
         <?php
-        $pageTitle = "Lista Tickets";
-        include 'includes/menu.php';
+
         include 'includes/connection.php';
+
+        $pageTitle = "Lista Tickets";
+
+        include 'includes/menu.php';
         // Retrieve user's location using functions from numTienda.php
         require_once 'includes/numTienda.php';
         require_once 'includes/timezone_setting.php';
         $nombre = $sede[$n];
+
 
         if (isset($_GET['order'])) {
             $order = $_GET['order'];
@@ -44,7 +49,7 @@ session_start();
             // User is logged in, retrieve department ID
             $departmentID = $_SESSION['department_id'];
             if ($departmentID == 0) {
-                $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
+                $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.check_usuario, tickets.check_dept, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
                 FROM tickets
                 INNER JOIN departamentos ON tickets.id_departamento = departamentos.id_departamento
                 LEFT JOIN archivos ON tickets.id_ticket = archivos.id_ticket
@@ -53,7 +58,7 @@ session_start();
                 ORDER BY tickets.titulo ASC";
 
             } else {
-                $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
+                $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.check_usuario, tickets.check_dept, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
             FROM tickets
             INNER JOIN departamentos ON tickets.id_departamento = departamentos.id_departamento
             LEFT JOIN archivos ON tickets.id_ticket = archivos.id_ticket
@@ -63,7 +68,7 @@ session_start();
             }
         } else {
             // User is not logged in, retrieve tickets by location only
-            $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
+            $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.check_usuario, tickets.check_dept, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
             FROM tickets
             INNER JOIN departamentos ON tickets.id_departamento = departamentos.id_departamento
             LEFT JOIN archivos ON tickets.id_ticket = archivos.id_ticket

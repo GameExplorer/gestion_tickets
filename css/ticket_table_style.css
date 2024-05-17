@@ -16,7 +16,7 @@ h1 {
 /* Table style */
 table {
   margin: 0 auto;
-  width: 90%;
+  width: 95%;
   text-align: center;
   border-collapse: collapse;
 }
@@ -31,22 +31,22 @@ td {
 }
 
 th {
-  padding: 5px 10px 5px 10px;
-  width: 200px;
+  padding: 5px 15px 15px 5px;
+  width: 350px;
   font-size: 1em;
   display: table-cell;
   text-transform: uppercase;
-  font-weight: 900;
+  font-weight: 800;
   background-color: #96c565;
   color: white;
 }
 
-th:nth-child(10) {
+th:nth-child(12) {
   width: 120px;
 }
 
 th:last-child {
-  width: 200px;
+  width: 150px;
 }
 
 th:nth-child(even) {
@@ -161,6 +161,13 @@ button {
   height: 50px;
 }
 
+.statusIcons {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  justify-content: center;
+}
+
 /* Filter inputs*/
 .filter-input {
   width: 100%;
@@ -186,7 +193,7 @@ button {
 .date-filter-icon {
   cursor: pointer;
 }
-  
+
 .date-inputs {
   position: fixed;
   background-color: #fff;

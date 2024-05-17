@@ -16,153 +16,6 @@ ini_set('display_errors', 1);
         <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <style>
-            body {
-                width: 100%;
-                margin: 0;
-                padding: 0;
-                overflow-x: hidden;
-            }
-
-            h1 {
-                text-align: center;
-                text-transform: uppercase;
-                font-weight: 900;
-                padding-top: 15px;
-                padding-bottom: 5px;
-            }
-
-            h3 {
-                text-align: center;
-                text-transform: uppercase;
-                border-bottom: 2px solid #c0c0c0;
-            }
-
-            h4 {
-                margin-left: 10px;
-            }
-
-            h5 {
-                margin-left: 10px;
-                font-size: 1.3em;
-                text-transform: uppercase;
-                font-weight: bold;
-                margin-left: 10px;
-                border-bottom: 2px solid #c0c0c0;
-            }
-
-            .formControl {
-                border-radius: 5px;
-                padding-top: 7px;
-                padding-bottom: 7px;
-                background-color: #f8f9fa;
-            }
-
-            label {
-                display: inline-block;
-                padding: 5px;
-            }
-
-            textarea {
-                width: 100%;
-                height: 100px;
-            }
-
-            .ticket {
-                font-weight: 400;
-                color: #3366cc;
-                font-size: 1.25em;
-                text-transform: uppercase;
-                padding: 10px;
-                margin-left: 10px;
-                margin-bottom: 15px;
-                align-items: center;
-            }
-
-            .ticketUnderline {
-                border-bottom: 1px solid #ccc;
-                margin-bottom: 10px;
-                width: 100%;
-            }
-
-            .ticketText {
-                font-size: 1.25em;
-                font-weight: 500;
-            }
-
-            .descText {
-                margin: 10px;
-                padding: 10px;
-                width: 95%;
-                height: 150px;
-                border: 1px solid #ccc;
-                resize: none;
-            }
-
-            .comment {
-                background-color: #ebebeb;
-                padding: 12.5px 0 12.5px 10px;
-                margin: 15px;
-                border-radius: 7px;
-            }
-
-            .ticketUnderline {
-                border-bottom: 1px solid #ccc;
-            }
-
-            a:link {
-                text-decoration: none;
-            }
-
-            a:visited {
-                text-decoration: none;
-            }
-
-            a:hover {
-                text-decoration: none;
-            }
-
-            a:active {
-                text-decoration: none;
-            }
-
-            @media (max-width: 767px) {
-                .textBreak {
-                    padding-left: 22.5px;
-                    display: block;
-                }
-            }
-
-            .markCompletedBtn {
-                background-color: #4caf50;
-                border: none;
-                border-radius: 7px;
-                color: white;
-                font-weight: 600;
-                text-transform: uppercase;
-                float: right;
-                padding: 15px;
-                margin-top: 50px;
-                margin-bottom: 25px;
-                margin-left: 40px;
-            }
-
-            .guardarbtn {
-                text-transform: uppercase;
-                float: right;
-                border-radius: 7px;
-                margin-top: 50px;
-                margin-bottom: 25px;
-                margin-right: 10px;
-                margin-left: 10px;
-            }
-
-            .send-button {
-                width: 150px;
-                height: 50px;
-                margin-left: 10px;
-            }
-        </style>
     </head>
 
     <body>
@@ -303,9 +156,9 @@ ini_set('display_errors', 1);
                         Información</h4>
                     <form method="post">
                         <div>
-                            <div class="row">
-                                <div class="col-md-3 ">
-                                    <label for="priority">Priority:</label>
+                            <div class="row px-5 justify-content-center">
+                                <div class="col-md-2 my-2">
+                                    <label for="priority">Prioridad:</label>
                                     <select name="priority" id="priority" class="formControl">
                                         <option value="Nuevo" <?php if ($priority == "Nuevo")
                                             echo "selected"; ?>>Nuevo</option>
@@ -319,8 +172,8 @@ ini_set('display_errors', 1);
                                             echo "selected"; ?>>Baja</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="department">Dept:</label>
+                                <div class="col-md-3 my-2">
+                                    <label for="department">Departamento:</label>
                                     <select name="department" id="department" class="formControl">
                                         <?php
                                         // Retrieve departments from the database and populate the dropdown menu
@@ -336,7 +189,7 @@ ini_set('display_errors', 1);
                                         ?>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 my-2">
                                     <label for="categories">Categoría:</label>
                                     <select name="categories" id="categories" class="formControl">
                                     </select>
@@ -381,7 +234,7 @@ ini_set('display_errors', 1);
                                     // Trigger the department change event to populate categories initially
                                     document.getElementById('department').dispatchEvent(new Event('change'));
                                 </script>
-                                <div class="col-md-3">
+                                <div class="col-md-2 my-2">
                                     <label for="status">Estado:</label>
                                     <select name="status" id="status" class="formControl">
                                         <option value="Abierto" <?php if ($status == "Abierto")
@@ -405,7 +258,7 @@ ini_set('display_errors', 1);
                                         <input type="submit" name="close_ticket" value="Marcar como Resuelto"
                                             class="markCompletedBtn">
                                     </form>
-                                </div> <!-- Button to close the ticket -->
+                                </div>
                             </div>
                         </div>
                     </form>

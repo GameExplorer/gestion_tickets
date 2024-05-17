@@ -18,6 +18,7 @@ function getSortUrl($column)
 
 if ($result->num_rows > 0) {
     $sort == 'ASC' ? $sort = 'DESC' : $sort = 'ASC';
+    echo "<div class='table-responsive'>";
     echo "<table id='myTable'>";
     echo "<thead>";
     echo "<tr>";
@@ -28,6 +29,8 @@ if ($result->num_rows > 0) {
     echo "<th><a href='#' data-column='4'>Título <i class='fas fa-sort'></i></a></th>";
     echo "<th><a href='#' data-column='5'>Fecha Creación <i class='fas fa-sort'></i></a></th>";
     echo "<th><a href='#' data-column='6'>Estado <i class='fas fa-sort'></i></a></th>";
+    echo "<th><a>Usuario</a></th>";
+    echo "<th><a>Dept</a></th>";
     echo "<th><a href='#' data-column='7'>Prioridad <i class='fas fa-sort'></i></a></th>";
     echo "<th><a href='#' data-column='8'>Fecha Actualización <i class='fas fa-sort'></i></a></th>";
     echo "<th>Archivos</th>";
@@ -112,6 +115,10 @@ if ($result->num_rows > 0) {
                   <option value='En Espera'>En Espera</option>
               </select></td>";
 
+    // Ticket Closing Status
+    echo "<td></td>";
+    echo "<td></td>";
+
     //Priority column
     echo "<td><select class='filter-select' data-column='7'> 
                   <option value=''>Todo</option>
@@ -151,6 +158,23 @@ if ($result->num_rows > 0) {
         echo "<td>" . $row["titulo"] . "</td>";
         echo "<td>" . $row["fecha_creacion"] . "</td>";
         echo "<td class='Status'>" . $row["estado"] . "</td>";
+
+        echo "<td>";
+        if ($row["check_usuario"] == 0) {
+            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='statusIcons'>";
+
+        } else {
+            echo "<img src='assets/done-icon.svg' alt='file icon' class='statusIcons'>";
+        }
+        echo "</td>";
+        echo "<td>";
+        if ($row["check_dept"] == 0) {
+            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='statusIcons'>";
+        } else {
+            echo "<img src='assets/done-icon.svg' alt='file icon' class='statusIcons'>";
+        }
+        echo "</td>";
+
         echo "<td>" . $row["prioridad"] . "</td>";
         echo "<td class='Last_Updated'>" . $row["fecha_actualizacion"] . "</td>";
 
@@ -167,7 +191,7 @@ if ($result->num_rows > 0) {
             '</form>';
         //non logged - users shouldn't see this button and the status select button
         if (isset($_SESSION['loggedin'])) {
-            echo "<select class='status-select p-2'>";
+            echo "<select class='form-select    status-select p-2'>";
             echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
             echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
             echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
@@ -182,6 +206,7 @@ if ($result->num_rows > 0) {
 }
 echo "</tbody>";
 echo "</table>";
+echo "</div>";
 $conn->close();
 ?>
 

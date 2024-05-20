@@ -1,6 +1,4 @@
 <?php
-
-
 // Default sorting parameters
 $order = isset($_GET['order']) ? $_GET['order'] : 'id_ticket';
 $sort = isset($_GET['sort']) && ($_GET['sort'] === 'DESC' || $_GET['sort'] === 'ASC') ? $_GET['sort'] : 'ASC';
@@ -23,17 +21,17 @@ if ($result->num_rows > 0) {
     echo "<thead>";
     echo "<tr>";
     echo "<th class='sort-by'><a href='#' data-column='0'>ID Ticket <i class='fas fa-sort'></i></a></th>";
-    echo "<th><a href='#' data-column='1'>Nombre <i class='fas fa-sort'></i></a></th>";
-    echo "<th><a href='#' data-column='2'>Localización <i class='fas fa-sort'></i></a></th>";
-    echo "<th><a href='#' data-column='3'>Departamento <i class='fas fa-sort'></i></a></th>";
-    echo "<th><a href='#' data-column='4'>Título <i class='fas fa-sort'></i></a></th>";
-    echo "<th><a href='#' data-column='5'>Fecha Creación <i class='fas fa-sort'></i></a></th>";
-    echo "<th><a href='#' data-column='6'>Estado <i class='fas fa-sort'></i></a></th>";
-    echo "<th><a>Usuario</a></th>";
-    echo "<th><a>Dept</a></th>";
-    echo "<th><a href='#' data-column='7'>Prioridad <i class='fas fa-sort'></i></a></th>";
-    echo "<th><a href='#' data-column='8'>Fecha Actualización <i class='fas fa-sort'></i></a></th>";
-    echo "<th>Archivos</th>";
+    echo "<th class='sort-by'><a href='#' data-column='1'>Nombre <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='2'>Localización <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='3'>Departamento <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='4'>Título <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='5'>Fecha Creación <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='6'>Estado <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='7'>Usuario <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='8'>Dept <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='9'>Prioridad <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='10'>Fecha Actualización <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'><a href='#' data-column='10'>Archivos <i class='fas fa-sort'></i></a></th>";
     echo "<th></th>";
     echo "</tr>";
 
@@ -120,7 +118,7 @@ if ($result->num_rows > 0) {
     echo "<td></td>";
 
     //Priority column
-    echo "<td><select class='filter-select' data-column='7'> 
+    echo "<td><select class='filter-select' data-column='9'> 
                   <option value=''>Todo</option>
                   <option value='Nuevo'>Nuevo</option>
                   <option value='Urgente'>Urgente</option>
@@ -135,9 +133,9 @@ if ($result->num_rows > 0) {
     echo '<i class="fas fa-calendar-alt date-filter-icon" onclick="toggleDateInputsLastUpdated(this)"></i>';
     echo '<div class="date-inputs">';
     echo '<label for="last-updated-start-date">Desde:</label>';
-    echo '<input type="date" id="last-updated-start-date" class="filter-input" data-column="8"><br>';
+    echo '<input type="date" id="last-updated-start-date" class="filter-input" data-column="10"><br>';
     echo '<label for="last-updated-end-date">Hasta:</label>';
-    echo '<input type="date" id="last-updated-end-date" class="filter-input" data-column="8">';
+    echo '<input type="date" id="last-updated-end-date" class="filter-input" data-column="10">';
     echo '</div>';
     echo '</div>';
     echo '</td>';
@@ -151,15 +149,15 @@ if ($result->num_rows > 0) {
 
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td class='incident-id'>" . $row["id_ticket"] . "</td>";
-        echo "<td>" . $row["nombre"] . "</td>";
-        echo "<td>" . $row["localizacion"] . "</td>";
-        echo "<td>" . $row["nombre_departamento"] . "</td>";
-        echo "<td>" . $row["titulo"] . "</td>";
-        echo "<td>" . $row["fecha_creacion"] . "</td>";
-        echo "<td class='Status'>" . $row["estado"] . "</td>";
+        echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
+        echo "<td data-column='1'>" . $row["nombre"] . "</td>";
+        echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
+        echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
+        echo "<td data-column='4'>" . $row["titulo"] . "</td>";
+        echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
+        echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
 
-        echo "<td>";
+        echo "<td data-column='7'>";
         if ($row["check_usuario"] == 0) {
             echo "<img src='assets/red-x-icon.svg' alt='file icon' class='statusIcons'>";
 
@@ -167,7 +165,7 @@ if ($result->num_rows > 0) {
             echo "<img src='assets/done-icon.svg' alt='file icon' class='statusIcons'>";
         }
         echo "</td>";
-        echo "<td>";
+        echo "<td data-column='8'>";
         if ($row["check_dept"] == 0) {
             echo "<img src='assets/red-x-icon.svg' alt='file icon' class='statusIcons'>";
         } else {
@@ -175,10 +173,10 @@ if ($result->num_rows > 0) {
         }
         echo "</td>";
 
-        echo "<td>" . $row["prioridad"] . "</td>";
-        echo "<td class='Last_Updated'>" . $row["fecha_actualizacion"] . "</td>";
+        echo "<td data-column='9'>" . $row["prioridad"] . "</td>";
+        echo "<td class='Last_Updated' data-column='10'>" . $row["fecha_actualizacion"] . "</td>";
 
-        echo "<td>";
+        echo "<td data-column='11'>";
         if ($row["FileCount"] > 0) {
             echo "<img src='assets/file_icon.svg' alt='file icon' class='icons'>";
         }
@@ -202,14 +200,19 @@ if ($result->num_rows > 0) {
         echo "</tr>";
     }
 } else {
-    echo "<tr><td colspan='11'>No tickets found.</td></tr>";
+    echo "<tr><td colspan='11'>No se han encontrado tickets.</td></tr>";
 }
 echo "</tbody>";
 echo "</table>";
 echo "</div>";
+echo "<div class='pagination d-flex justify-content-end align-items-center px-5 py-2'>";
+echo "<button id='prevPageBtn' class='btn btn-primary me-3'><i class='fa-solid fa-arrow-left'></i></button>";
+echo "<span class='pt-0 px-2'>Página <span id='currentPage'></span> de <span id='totalPages'></span></span>";
+echo "<button id='nextPageBtn' class='btn btn-primary ms-3'><i class='fa-solid fa-arrow-right'></i></button>";
+echo "</div>";
+
 $conn->close();
 ?>
-
 <script>
     function toggleDateInputs(icon) {
         const dateInputsContainer = icon.nextElementSibling;
@@ -224,203 +227,162 @@ $conn->close();
             dateInputsContainer.classList.toggle('show');
         }
     }
-
     document.addEventListener('DOMContentLoaded', function () {
-        // Function to sort table rows
-        function sortTable(columnIndex, order) {
-            const table = document.getElementById('myTable');
-            const tbody = table.getElementsByTagName('tbody')[0];
-            const rows = Array.from(tbody.getElementsByTagName('tr'));
+    const rowsPerPage = 10; // Number of rows to display per page
+    let currentPage = 1; // Current page number
+    let totalPages; // Total number of pages
+    let visibleRows = []; // Array to store rows that pass the filter
 
-            // Sort the rows based on the content of the specified column
-            rows.sort((a, b) => {
-                const aValue = a.getElementsByTagName('td')[columnIndex].textContent.trim();
-                const bValue = b.getElementsByTagName('td')[columnIndex].textContent.trim();
+    function displayTable() {
+        const table = document.getElementById('myTable');
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const rows = Array.from(tbody.getElementsByTagName('tr'));
 
-                return isNaN(aValue) ? aValue.localeCompare(bValue) : aValue - bValue;
-            });
+        // Hide all rows initially
+        rows.forEach(row => (row.style.display = 'none'));
 
-            // Reverse the order if sorting is in DESC order (ASC order now)
-            if (order === 'DESC') {
-                rows.reverse();
+        // Determine the range of rows to display based on the current page
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const rowsToDisplay = visibleRows.slice(start, end);
+
+        // Display the rows for the current page
+        rowsToDisplay.forEach(row => (row.style.display = ''));
+
+        // Update pagination info
+        totalPages = Math.ceil(visibleRows.length / rowsPerPage);
+        document.getElementById('currentPage').textContent = currentPage;
+        document.getElementById('totalPages').textContent = totalPages;
+    }
+
+    // Function to sort table rows
+    function sortTable(columnIndex, order) {
+        const table = document.getElementById('myTable');
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const rows = Array.from(tbody.getElementsByTagName('tr'));
+
+        // Sort the rows based on the content of the specified column
+        rows.sort((a, b) => {
+            const aValue = getCellValue(a, columnIndex);
+            const bValue = getCellValue(b, columnIndex);
+
+            if (!isNaN(aValue) && !isNaN(bValue)) {
+                return order === 'ASC' ? aValue - bValue : bValue - aValue;
+            } else {
+                return order === 'ASC' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
             }
-
-            // Re-append sorted rows to tbody
-            rows.forEach(row => tbody.appendChild(row));
-        }
-
-        // Add click event listeners to table headers for sorting
-        const headers = document.querySelectorAll('#myTable th');
-        headers.forEach((header, index) => {
-            header.addEventListener('click', function () {
-                const columnIndex = index; // Index of the clicked column
-                const order = this.dataset.sort === 'DESC' ? 'ASC' : 'DESC'; // Toggle sorting order
-                sortTable(columnIndex, order);
-                this.dataset.sort = order; // Update sorting order in dataset
-            });
         });
 
-        const statusSelects = document.querySelectorAll('.status-select');
-        statusSelects.forEach(select => {
-            select.addEventListener('change', function () {
-                console.log('status-select change event fired');
-                const row = this.closest('tr');
-                const incidentIdElement = row.querySelector('.incident-id');
-                const statusCell = row.querySelector('.Status');
-                const lastUpdatedCell = row.querySelector('.Last_Updated');
+        // Re-append sorted rows to tbody
+        rows.forEach(row => tbody.appendChild(row));
 
-                // Send AJAX request to update status
-                const xhr = new XMLHttpRequest();
-                const incidentId = incidentIdElement.textContent.trim(); // Retrieve incident ID
-                const status = this.value; // Retrieve selected status
-                const params = `incident_id=${incidentId}&status=${encodeURIComponent(status)}`;
-                lastUpdatedCell
-                xhr.open('POST', 'includes/update_status.php', true);
-                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                xhr.onload = function () {
-                    if (xhr.status === 200) {
-                        // Update status and time in cell using response
-                        const updatedTimestamp = xhr.responseText;
-                        console.log('Updated Timestamp:', updatedTimestamp);
+        // Update the visibleRows array and display the first page
+        filterTable();
+    }
 
-                        if (lastUpdatedCell) {
-                            lastUpdatedCell.textContent = updatedTimestamp;
-                        } else {
-                            console.error('Last Updated Cell not found.');
-                        }
-
-                        if (statusCell) {
-                            statusCell.textContent = status;
-                        } else {
-                            console.error('Status Cell not found.');
-                        }
-
-                        alert('Status updated successfully');
-                    } else {
-                        alert('Error updating status: ' + xhr.responseText);
-                    }
-                };
-                xhr.send(params);
-            });
-        });
-
-
-        const lastUpdatedStartInput = document.getElementById('last-updated-start-date');
-        const lastUpdatedEndInput = document.getElementById('last-updated-end-date');
-
-        if (lastUpdatedStartInput && lastUpdatedEndInput) {
-            lastUpdatedStartInput.addEventListener('change', applyLastUpdatedFilter);
-            lastUpdatedEndInput.addEventListener('change', applyLastUpdatedFilter);
+    // Helper function to get cell value based on column index
+    function getCellValue(row, index) {
+        const cell = row.getElementsByTagName('td')[index];
+        if (index === 7 || index === 8) { // Assuming column indices 7 and 8 correspond to "Usuario" and "Dept" respectively
+            const imageUrl = cell.querySelector('img').getAttribute('src');
+            return imageUrl === 'assets/done-icon.svg' ? true : false;
+        } else if (index === 11) {
+            const imageUrl = cell.querySelector('img').getAttribute('src');
+            return imageUrl === 'assets/file_icon.svg' ? true : false;
+        } else {
+            return cell.textContent.trim();
         }
+    }
 
-        function applyLastUpdatedFilter() {
-            const table = document.getElementById('myTable');
-            const tbody = table.getElementsByTagName('tbody')[0];
-            const rows = tbody.getElementsByTagName('tr');
-
-            const startDate = new Date(document.getElementById('last-updated-start-date').value);
-            const endDate = new Date(document.getElementById('last-updated-end-date').value);
-
-            endDate.setDate(endDate.getDate() + 1); // Include the selected end date
-
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                const lastUpdatedCell = row.querySelector('td:nth-child(9)'); // Last Updated is the 9th column
-
-                if (lastUpdatedCell) {
-                    const lastUpdatedDate = new Date(lastUpdatedCell.textContent.trim());
-
-                    const isVisible =
-                        (!startDate || lastUpdatedDate >= startDate) &&
-                        (!endDate || lastUpdatedDate <= endDate);
-
-                    row.style.display = isVisible ? '' : 'none';
-                }
-            }
-        }
-
-        const filterInputs = document.querySelectorAll('.filter-input');
-        const filterSelects = document.querySelectorAll('.filter-select');
-
-        filterInputs.forEach(input => {
-            input.addEventListener('keyup', function () {
-                const columnIndex = this.dataset.column;
-                filterTable(columnIndex, this.value.trim());
-            });
+    // Add click event listeners to table headers for sorting
+    const headers = document.querySelectorAll('#myTable th.sort-by a');
+    headers.forEach(header => {
+        header.addEventListener('click', function () {
+            const columnIndex = parseInt(this.dataset.column);
+            const order = this.dataset.sort === 'DESC' ? 'ASC' : 'DESC';
+            sortTable(columnIndex, order);
+            this.dataset.sort = order;
         });
-
-        filterSelects.forEach(select => {
-            select.addEventListener('change', function () {
-                const columnIndex = this.dataset.column;
-                filterTable(columnIndex, this.value);
-            });
-        });
-
-        // Function filters data based on the input field values, also we can clear thse values
-        function filterTable() {
-            const table = document.getElementById('myTable');
-            const tbody = table.getElementsByTagName('tbody')[0]; // body element
-            const rows = tbody.getElementsByTagName('tr');
-
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                const cells = row.getElementsByTagName('td');
-                let shouldDisplay = true;
-
-                for (let j = 0; j < cells.length; j++) {
-                    const targetCell = cells[j];
-                    const filterInput = document.querySelector(`.filter-input[data-column="${j}"]`);
-                    const filterSelect = document.querySelector(`.filter-select[data-column="${j}"]`);
-
-                    if (filterInput) {
-                        const inputValue = filterInput.value.trim().toUpperCase();
-                        if (inputValue !== '' && inputValue !== 'Todo') {
-                            const cellText = targetCell.textContent || targetCell.innerText;
-                            if (cellText.toUpperCase().indexOf(inputValue) === -1) {
-                                shouldDisplay = false;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (filterSelect) {
-                        const selectValue = filterSelect.value.trim().toUpperCase();
-                        if (selectValue !== '' && selectValue !== 'Todo') {
-                            const cellText = targetCell.textContent || targetCell.innerText;
-                            if (j === 7 && cellText.toUpperCase() !== selectValue) { // Prioridad column (index 7)
-                                shouldDisplay = false;
-                                break;
-                            } else if (j !== 7 && cellText.toUpperCase().indexOf(selectValue) === -1) {
-                                shouldDisplay = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                row.style.display = shouldDisplay ? '' : 'none';
-            }
-        }
-
-        const clearFiltersBtn = document.getElementById('clearFiltersBtn');
-        if (clearFiltersBtn) {
-            clearFiltersBtn.addEventListener('click', function () {
-
-                // Clear all input values
-                filterInputs.forEach(input => {
-                    input.value = '';
-                });
-
-                // Reset all select elements to their first option (All)
-                filterSelects.forEach(select => {
-                    select.selectedIndex = 0;
-                });
-
-                // Trigger filterTable function to reset table display
-                filterTable('', '');
-            });
-        };
     });
 
+    // Pagination functions
+    document.getElementById('prevPageBtn').addEventListener('click', function () {
+        if (currentPage > 1) {
+            currentPage--;
+            displayTable();
+        }
+    });
 
+    document.getElementById('nextPageBtn').addEventListener('click', function () {
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayTable();
+        }
+    });
+
+    // Filter functions
+    const filterInputs = document.querySelectorAll('.filter-input');
+    const filterSelects = document.querySelectorAll('.filter-select');
+
+    filterInputs.forEach(input => {
+        input.addEventListener('keyup', function () {
+            currentPage = 1; // Reset to first page when filter is applied
+            filterTable();
+        });
+    });
+
+    filterSelects.forEach(select => {
+        select.addEventListener('change', function () {
+            currentPage = 1; // Reset to first page when filter is applied
+            filterTable();
+        });
+    });
+
+    function filterTable() {
+        const table = document.getElementById('myTable');
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const rows = Array.from(tbody.getElementsByTagName('tr'));
+
+        // Clear the visibleRows array
+        visibleRows = [];
+
+        rows.forEach(row => {
+            let shouldDisplay = true;
+            const cells = row.getElementsByTagName('td');
+
+            filterInputs.forEach(input => {
+                const inputValue = input.value.trim().toUpperCase();
+                const cellValue = cells[input.dataset.column].textContent.trim().toUpperCase();
+                if (inputValue && !cellValue.includes(inputValue)) {
+                    shouldDisplay = false;
+                }
+            });
+
+            filterSelects.forEach(select => {
+                const selectValue = select.value.trim().toUpperCase();
+                const cellValue = cells[select.dataset.column].textContent.trim().toUpperCase();
+                if (selectValue && selectValue !== 'TODO' && cellValue !== selectValue) {
+                    shouldDisplay = false;
+                }
+            });
+
+            if (shouldDisplay) {
+                visibleRows.push(row);
+            }
+        });
+
+        // Display the first page of the filtered results
+        displayTable();
+    }
+
+    document.getElementById('clearFiltersBtn').addEventListener('click', function () {
+        filterInputs.forEach(input => (input.value = ''));
+        filterSelects.forEach(select => (select.selectedIndex = 0));
+        currentPage = 1; // Reset to first page when filters are cleared
+        filterTable();
+    });
+
+    // Initial display
+    filterTable();
+});
 </script>

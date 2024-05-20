@@ -521,7 +521,7 @@ ini_set('display_errors', 1);
                                 $sql = "UPDATE tickets SET fecha_actualizacion = '$timeComment', leido_localizacion = '0' WHERE id_ticket = $ticketId";
                                 $conn->query($sql);
                             } else {
-                                $sql = "UPDATE tickets SET fecha_actualizacion = '$$timeComment', leido_departamento = '0' WHERE id_ticket = $ticketId";
+                                $sql = "UPDATE tickets SET fecha_actualizacion = '$timeComment', leido_departamento = '0' WHERE id_ticket = $ticketId";
                                 $conn->query($sql);
                             }
                             echo "<script>window.location.href = 'ticket_table.php';</script>";

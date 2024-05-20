@@ -2,17 +2,13 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-$pageTitle = "ENTRADAS CERRADAS";
-include 'includes/menu.php';
-include 'includes/connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="UTF-8">
-        <title>Closed Tickets</title>
+        <title>Historial Tickets</title>
         <link rel="stylesheet" href="css/ticket_table_style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
@@ -22,9 +18,12 @@ include 'includes/connection.php';
 
     <body>
         <?php
-
-        // Include necessary files
         include 'includes/connection.php';
+        $pageTitle = "Histórico";
+        include 'includes/menu.php';
+        // Retrieve user's location using functions from numTienda.php
+        require_once 'includes/numTienda.php';
+        require_once 'includes/timezone_setting.php';
 
         $sql = "SELECT tickets.id_ticket, tickets.nombre, tickets.localizacion, tickets.prioridad, departamentos.nombre_departamento, tickets.titulo, tickets.fecha_creacion, tickets.estado, tickets.check_usuario, tickets.check_dept, tickets.fecha_actualizacion, COUNT(archivos.id_archivo) AS FileCount
                 FROM tickets

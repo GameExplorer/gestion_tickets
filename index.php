@@ -2,17 +2,13 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-$pageTitle = "Tabla Tickets";
-include 'includes/menu.php';
-include 'includes/connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="UTF-8">
-        <title>Tickets Table</title>
+        <title>Tickets Abiertos</title>
         <link rel="stylesheet" href="css/ticket_table_style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
@@ -22,9 +18,12 @@ include 'includes/connection.php';
 
     <body>
         <?php
-
-        // Include necessary files
         include 'includes/connection.php';
+        $pageTitle = "Lista Tickets";
+        include 'includes/menu.php';
+        // Retrieve user's location using functions from numTienda.php
+        require_once 'includes/numTienda.php';
+        require_once 'includes/timezone_setting.php';
         $statusFilter = 'Abierto';
 
         $_REQUEST['estado'] = 'Abierto';

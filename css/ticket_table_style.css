@@ -32,13 +32,15 @@ td {
 
 th {
   padding: 5px 15px 15px 5px;
-  width: 500px;
+  width: 550px;
+  height: 50px;
   font-size: 1em;
   display: table-cell;
   text-transform: uppercase;
   font-weight: 800;
   background-color: #96c565;
-  color: white;
+  border: 21px gray solid;
+  cursor: pointer;
 }
 
 th:nth-child(12) {
@@ -55,6 +57,10 @@ th:nth-child(even) {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
 }
 
 th a,
@@ -162,10 +168,9 @@ button {
 }
 
 .statusIcons {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
-  justify-content: center;
 }
 
 /* Filter inputs*/

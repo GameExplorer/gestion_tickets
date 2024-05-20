@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DETALLES TICKET</title>
+        <title>NUEVO TICKET</title>
         <link rel="stylesheet" href="css/ticket_form_style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <!-- Sender and Location -->
                 <div class="row mb-3">
-                    <label for="sender" class="col-md-3 col-form-label">Emisor:</label>
+                    <label for="sender" class="col-md-3 col-form-label">Nombre:</label>
                     <div class="col-md-5">
                         <input type="text" id="sender" name="sender" maxlength="32" placeholder="Introducir nombre"
                             value="<?php echo htmlspecialchars($name); ?>" required class="form-control">
@@ -218,5 +218,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (spanElement) {
             spanElement.textContent = fileName;
         }
+    }
+    function goToTicketTable() {
+        window.location.href = 'index.php';
     }
 </script>

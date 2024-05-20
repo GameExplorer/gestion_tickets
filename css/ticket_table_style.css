@@ -32,7 +32,7 @@ td {
 
 th {
   padding: 5px 15px 15px 5px;
-  width: 350px;
+  width: 500px;
   font-size: 1em;
   display: table-cell;
   text-transform: uppercase;
@@ -206,4 +206,35 @@ button {
 .date-inputs.show {
   display: block;
   z-index: 1000;
+}
+
+/* Tooltip */
+.hover-me:hover + .tooltip {
+  opacity: 1;
+}
+
+.tooltip {
+  position: absolute;
+  transform-origin: top center;
+  min-width: 100px;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  background: black;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  top: 0%;
+  left: 50%;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+  transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
 }

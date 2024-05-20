@@ -3,16 +3,8 @@
 $order = isset($_GET['order']) ? $_GET['order'] : 'id_ticket';
 $sort = isset($_GET['sort']) && ($_GET['sort'] === 'DESC' || $_GET['sort'] === 'ASC') ? $_GET['sort'] : 'ASC';
 
-// Toggle sorting direction
-$newSort = ($sort === 'ASC') ? 'DESC' : 'ASC';
 
 $result = $conn->query($sql);
-
-function getSortUrl($column)
-{
-    global $order, $sort;
-    $newSort = ($order === $column && $sort === 'ASC') ? 'DESC' : 'ASC';
-}
 
 if ($result->num_rows > 0) {
     $sort == 'ASC' ? $sort = 'DESC' : $sort = 'ASC';
@@ -20,18 +12,51 @@ if ($result->num_rows > 0) {
     echo "<table id='myTable'>";
     echo "<thead>";
     echo "<tr>";
-    echo "<th class='sort-by'><a href='#' data-column='0'>ID Ticket <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='1'>Nombre <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='2'>Localización <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='3'>Departamento <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='4'>Título <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='5'>Fecha Creación <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='6'>Estado <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='7'>Usuario <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='8'>Dept <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='9'>Prioridad <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='10'>Fecha Actualización <i class='fas fa-sort'></i></a></th>";
-    echo "<th class='sort-by'><a href='#' data-column='10'>Archivos <i class='fas fa-sort'></i></a></th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='0' class='hover-me'>ID Ticket <i class='fas fa-sort'></i></a>
+            <div class='tooltip'>Ordenar por ID Ticket</div>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='1' class='hover-me'>Nombre <i class='fas fa-sort'></i></a>
+            <div class='tooltip'>Ordenar por Nombre</div>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='2' class='hover-me'>Localización <i class='fas fa-sort'></i></a>
+            <div class='tooltip'>Ordenar por Localización</div>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='3' class='hover-me'>Departamento <i class='fas fa-sort'></i></a>
+            <div class='tooltip'>Ordenar por Departamento</div>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='4' class='hover-me'>Título <i class='fas fa-sort'></i></a>
+            <div class='tooltip'>Ordenar por Título</div>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='5' class='hover-me'>Fecha Creación <i class='fas fa-sort'></i></a>
+            <div class='tooltip'>Ordenar por Fecha Creación</div>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='6' class='hover-me'>Estado <i class='fas fa-sort'></i></a>
+            <div class='tooltip'>Ordenar por Estado</div>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='7'>Usuario <i class='fas fa-sort'></i></a>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='8'>Dept <i class='fas fa-sort'></i></a>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='9' class='hover-me'>Prioridad <i class='fas fa-sort'></i></a>
+            <div class='tooltip'>Ordenar por Prioridad</div>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='10' class='hover-me'>Fecha Actualización <i class='fas fa-sort'></i></a>
+            <div class='tooltip'>Ordenar por Fecha Actualización</div>
+          </th>";
+    echo "<th class='sort-by'>
+            <a href='#' data-column='11'>Archivos <i class='fas fa-sort'></i></a>
+          </th>";
     echo "<th></th>";
     echo "</tr>";
 
@@ -159,17 +184,21 @@ if ($result->num_rows > 0) {
 
         echo "<td data-column='7'>";
         if ($row["check_usuario"] == 0) {
-            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='statusIcons'>";
+            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Usuario marcado como sin resolver</div>";
 
         } else {
-            echo "<img src='assets/done-icon.svg' alt='file icon' class='statusIcons'>";
+            echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Usuario marcado como solucionado</div>";
         }
         echo "</td>";
         echo "<td data-column='8'>";
         if ($row["check_dept"] == 0) {
-            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='statusIcons'>";
+            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Departamento marcado como sin resolver</div>";
         } else {
-            echo "<img src='assets/done-icon.svg' alt='file icon' class='statusIcons'>";
+            echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Departamento marcado como resuelto</div>";
         }
         echo "</td>";
 
@@ -178,7 +207,8 @@ if ($result->num_rows > 0) {
 
         echo "<td data-column='11'>";
         if ($row["FileCount"] > 0) {
-            echo "<img src='assets/file_icon.svg' alt='file icon' class='icons'>";
+            echo "<img src='assets/file_icon.svg' alt='file icon' class='icons hover-me'>
+            <div class='tooltip'>El ticket contiene archivos</div>";
         }
         echo "</td>";
 
@@ -211,6 +241,7 @@ echo "<span class='pt-0 px-2'>Página <span id='currentPage'></span> de <span id
 echo "<button id='nextPageBtn' class='btn btn-primary ms-3'><i class='fa-solid fa-arrow-right'></i></button>";
 echo "</div>";
 
+
 $conn->close();
 ?>
 <script>
@@ -228,161 +259,161 @@ $conn->close();
         }
     }
     document.addEventListener('DOMContentLoaded', function () {
-    const rowsPerPage = 10; // Number of rows to display per page
-    let currentPage = 1; // Current page number
-    let totalPages; // Total number of pages
-    let visibleRows = []; // Array to store rows that pass the filter
+        const rowsPerPage = 10; // Number of rows to display per page
+        let currentPage = 1; // Current page number
+        let totalPages; // Total number of pages
+        let visibleRows = []; // Array to store rows that pass the filter
 
-    function displayTable() {
-        const table = document.getElementById('myTable');
-        const tbody = table.getElementsByTagName('tbody')[0];
-        const rows = Array.from(tbody.getElementsByTagName('tr'));
+        function displayTable() {
+            const table = document.getElementById('myTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = Array.from(tbody.getElementsByTagName('tr'));
 
-        // Hide all rows initially
-        rows.forEach(row => (row.style.display = 'none'));
+            // Hide all rows initially
+            rows.forEach(row => (row.style.display = 'none'));
 
-        // Determine the range of rows to display based on the current page
-        const start = (currentPage - 1) * rowsPerPage;
-        const end = start + rowsPerPage;
-        const rowsToDisplay = visibleRows.slice(start, end);
+            // Determine the range of rows to display based on the current page
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const rowsToDisplay = visibleRows.slice(start, end);
 
-        // Display the rows for the current page
-        rowsToDisplay.forEach(row => (row.style.display = ''));
+            // Display the rows for the current page
+            rowsToDisplay.forEach(row => (row.style.display = ''));
 
-        // Update pagination info
-        totalPages = Math.ceil(visibleRows.length / rowsPerPage);
-        document.getElementById('currentPage').textContent = currentPage;
-        document.getElementById('totalPages').textContent = totalPages;
-    }
+            // Update pagination info
+            totalPages = Math.ceil(visibleRows.length / rowsPerPage);
+            document.getElementById('currentPage').textContent = currentPage;
+            document.getElementById('totalPages').textContent = totalPages;
+        }
 
-    // Function to sort table rows
-    function sortTable(columnIndex, order) {
-        const table = document.getElementById('myTable');
-        const tbody = table.getElementsByTagName('tbody')[0];
-        const rows = Array.from(tbody.getElementsByTagName('tr'));
+        // Function to sort table rows
+        function sortTable(columnIndex, order) {
+            const table = document.getElementById('myTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = Array.from(tbody.getElementsByTagName('tr'));
 
-        // Sort the rows based on the content of the specified column
-        rows.sort((a, b) => {
-            const aValue = getCellValue(a, columnIndex);
-            const bValue = getCellValue(b, columnIndex);
+            // Sort the rows based on the content of the specified column
+            rows.sort((a, b) => {
+                const aValue = getCellValue(a, columnIndex);
+                const bValue = getCellValue(b, columnIndex);
 
-            if (!isNaN(aValue) && !isNaN(bValue)) {
-                return order === 'ASC' ? aValue - bValue : bValue - aValue;
+                if (!isNaN(aValue) && !isNaN(bValue)) {
+                    return order === 'ASC' ? aValue - bValue : bValue - aValue;
+                } else {
+                    return order === 'ASC' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                }
+            });
+
+            // Re-append sorted rows to tbody
+            rows.forEach(row => tbody.appendChild(row));
+
+            // Update the visibleRows array and display the first page
+            filterTable();
+        }
+
+        // Helper function to get cell value based on column index
+        function getCellValue(row, index) {
+            const cell = row.getElementsByTagName('td')[index];
+            if (index === 7 || index === 8) { // Assuming column indices 7 and 8 correspond to "Usuario" and "Dept" respectively
+                const imageUrl = cell.querySelector('img').getAttribute('src');
+                return imageUrl === 'assets/done-icon.svg' ? true : false;
+            } else if (index === 11) {
+                const imageUrl = cell.querySelector('img').getAttribute('src');
+                return imageUrl === 'assets/file_icon.svg' ? true : false;
             } else {
-                return order === 'ASC' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                return cell.textContent.trim();
+            }
+        }
+
+        // Add click event listeners to table headers for sorting
+        const headers = document.querySelectorAll('#myTable th.sort-by a');
+        headers.forEach(header => {
+            header.addEventListener('click', function () {
+                const columnIndex = parseInt(this.dataset.column);
+                const order = this.dataset.sort === 'DESC' ? 'ASC' : 'DESC';
+                sortTable(columnIndex, order);
+                this.dataset.sort = order;
+            });
+        });
+
+        // Pagination functions
+        document.getElementById('prevPageBtn').addEventListener('click', function () {
+            if (currentPage > 1) {
+                currentPage--;
+                displayTable();
             }
         });
 
-        // Re-append sorted rows to tbody
-        rows.forEach(row => tbody.appendChild(row));
-
-        // Update the visibleRows array and display the first page
-        filterTable();
-    }
-
-    // Helper function to get cell value based on column index
-    function getCellValue(row, index) {
-        const cell = row.getElementsByTagName('td')[index];
-        if (index === 7 || index === 8) { // Assuming column indices 7 and 8 correspond to "Usuario" and "Dept" respectively
-            const imageUrl = cell.querySelector('img').getAttribute('src');
-            return imageUrl === 'assets/done-icon.svg' ? true : false;
-        } else if (index === 11) {
-            const imageUrl = cell.querySelector('img').getAttribute('src');
-            return imageUrl === 'assets/file_icon.svg' ? true : false;
-        } else {
-            return cell.textContent.trim();
-        }
-    }
-
-    // Add click event listeners to table headers for sorting
-    const headers = document.querySelectorAll('#myTable th.sort-by a');
-    headers.forEach(header => {
-        header.addEventListener('click', function () {
-            const columnIndex = parseInt(this.dataset.column);
-            const order = this.dataset.sort === 'DESC' ? 'ASC' : 'DESC';
-            sortTable(columnIndex, order);
-            this.dataset.sort = order;
-        });
-    });
-
-    // Pagination functions
-    document.getElementById('prevPageBtn').addEventListener('click', function () {
-        if (currentPage > 1) {
-            currentPage--;
-            displayTable();
-        }
-    });
-
-    document.getElementById('nextPageBtn').addEventListener('click', function () {
-        if (currentPage < totalPages) {
-            currentPage++;
-            displayTable();
-        }
-    });
-
-    // Filter functions
-    const filterInputs = document.querySelectorAll('.filter-input');
-    const filterSelects = document.querySelectorAll('.filter-select');
-
-    filterInputs.forEach(input => {
-        input.addEventListener('keyup', function () {
-            currentPage = 1; // Reset to first page when filter is applied
-            filterTable();
-        });
-    });
-
-    filterSelects.forEach(select => {
-        select.addEventListener('change', function () {
-            currentPage = 1; // Reset to first page when filter is applied
-            filterTable();
-        });
-    });
-
-    function filterTable() {
-        const table = document.getElementById('myTable');
-        const tbody = table.getElementsByTagName('tbody')[0];
-        const rows = Array.from(tbody.getElementsByTagName('tr'));
-
-        // Clear the visibleRows array
-        visibleRows = [];
-
-        rows.forEach(row => {
-            let shouldDisplay = true;
-            const cells = row.getElementsByTagName('td');
-
-            filterInputs.forEach(input => {
-                const inputValue = input.value.trim().toUpperCase();
-                const cellValue = cells[input.dataset.column].textContent.trim().toUpperCase();
-                if (inputValue && !cellValue.includes(inputValue)) {
-                    shouldDisplay = false;
-                }
-            });
-
-            filterSelects.forEach(select => {
-                const selectValue = select.value.trim().toUpperCase();
-                const cellValue = cells[select.dataset.column].textContent.trim().toUpperCase();
-                if (selectValue && selectValue !== 'TODO' && cellValue !== selectValue) {
-                    shouldDisplay = false;
-                }
-            });
-
-            if (shouldDisplay) {
-                visibleRows.push(row);
+        document.getElementById('nextPageBtn').addEventListener('click', function () {
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayTable();
             }
         });
 
-        // Display the first page of the filtered results
-        displayTable();
-    }
+        // Filter functions
+        const filterInputs = document.querySelectorAll('.filter-input');
+        const filterSelects = document.querySelectorAll('.filter-select');
 
-    document.getElementById('clearFiltersBtn').addEventListener('click', function () {
-        filterInputs.forEach(input => (input.value = ''));
-        filterSelects.forEach(select => (select.selectedIndex = 0));
-        currentPage = 1; // Reset to first page when filters are cleared
+        filterInputs.forEach(input => {
+            input.addEventListener('keyup', function () {
+                currentPage = 1; // Reset to first page when filter is applied
+                filterTable();
+            });
+        });
+
+        filterSelects.forEach(select => {
+            select.addEventListener('change', function () {
+                currentPage = 1; // Reset to first page when filter is applied
+                filterTable();
+            });
+        });
+
+        function filterTable() {
+            const table = document.getElementById('myTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = Array.from(tbody.getElementsByTagName('tr'));
+
+            // Clear the visibleRows array
+            visibleRows = [];
+
+            rows.forEach(row => {
+                let shouldDisplay = true;
+                const cells = row.getElementsByTagName('td');
+
+                filterInputs.forEach(input => {
+                    const inputValue = input.value.trim().toUpperCase();
+                    const cellValue = cells[input.dataset.column].textContent.trim().toUpperCase();
+                    if (inputValue && !cellValue.includes(inputValue)) {
+                        shouldDisplay = false;
+                    }
+                });
+
+                filterSelects.forEach(select => {
+                    const selectValue = select.value.trim().toUpperCase();
+                    const cellValue = cells[select.dataset.column].textContent.trim().toUpperCase();
+                    if (selectValue && selectValue !== 'TODO' && cellValue !== selectValue) {
+                        shouldDisplay = false;
+                    }
+                });
+
+                if (shouldDisplay) {
+                    visibleRows.push(row);
+                }
+            });
+
+            // Display the first page of the filtered results
+            displayTable();
+        }
+
+        document.getElementById('clearFiltersBtn').addEventListener('click', function () {
+            filterInputs.forEach(input => (input.value = ''));
+            filterSelects.forEach(select => (select.selectedIndex = 0));
+            currentPage = 1; // Reset to first page when filters are cleared
+            filterTable();
+        });
+
+        // Initial display
         filterTable();
     });
-
-    // Initial display
-    filterTable();
-});
 </script>

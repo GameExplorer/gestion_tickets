@@ -18,6 +18,8 @@ CREATE TABLE tickets (
     fecha_creacion DATETIME NOT NULL,
     fecha_actualizacion DATETIME NOT NULL,
     oculto tinyint(1) NOT NULL DEFAULT 0,
+    leido_localizacion tinyint(1) NOT NULL DEFAULT 0,
+    leido_departamento tinyint(1) NOT NULL DEFAULT 0,
     CONSTRAINT fk_id_departamento FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento) ON DELETE CASCADE
 );
 

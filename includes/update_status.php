@@ -5,7 +5,7 @@ require_once 'timezone_setting.php';
 $incident_id = $_POST['incident_id'];
 $status = $_POST['status'];
 
-$sql = "UPDATE tickets SET estado = '$status', fecha_actualizacion = NOW() WHERE id_ticket = $incident_id";
+$sql = "UPDATE tickets SET estado = '$status', fecha_actualizacion = NOW(), leido_localizacion = '0' WHERE id_ticket = $incident_id";
 $result = $conn->query($sql);
 
 

@@ -21,7 +21,7 @@
         $errorFound = false;
 
         // Insert ticket details into database
-        $sql = "INSERT INTO tickets (id_departamento, titulo, nombre, localizacion, prioridad, descripcion, categoria, estado, check_usuario, check_dept, fecha_creacion, fecha_actualizacion, oculto) VALUES ('$department','$title', '$name', '$location', 'Nuevo', '$description', '$category', 'Abierto', '0', '0','$ticketOpen', '$lastUpdated', '0')";
+        $sql = "INSERT INTO tickets (id_departamento, titulo, nombre, localizacion, prioridad, descripcion, categoria, estado, check_usuario, check_dept, fecha_creacion, fecha_actualizacion, oculto, leido_localizacion, leido_departamento) VALUES ('$department','$title', '$name', '$location', 'Nuevo', '$description', '$category', 'Abierto', '0', '0','$ticketOpen', '$lastUpdated', '0', '0', '0')";
         if ($conn->query($sql) === TRUE) {
             $ticketId = $conn->insert_id;
 

@@ -189,7 +189,7 @@ ini_set('display_errors', 1);
                                     </select>
                                 </div>
                                 <div class="col-md-3 my-2">
-                                    <label for="department">Departamento:</label>
+                                    <label for="department">Dept:</label>
                                     <select name="department" id="department" class="formControl">
                                         <?php
                                         // Retrieve departments from the database and populate the dropdown menu
@@ -288,7 +288,7 @@ ini_set('display_errors', 1);
                                 </p>
                             </div>
                             <div class="col-md-5">
-                                <p><span class="ticket">Dept:</span> <span
+                                <p><span class="ticket">Departamento:</span> <span
                                         class="ticketText"><?php echo $departmentName; ?></span></p>
                             </div>
                             <div class="col-md-4">

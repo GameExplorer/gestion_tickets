@@ -7,8 +7,8 @@ ini_set('display_errors', 1);
 <html lang="en">
 
     <head>
-        <meta charset="UTF-8">
-        <title>TABLA TICKETS</title>
+        <meta charset="UTF-8">  
+        <title>Tickets en curso</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/ticket_table_style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +22,7 @@ ini_set('display_errors', 1);
 
         include 'includes/connection.php';
 
-        $pageTitle = "Lista Tickets";
+        $pageTitle = "TICKETS EN CURSO";
 
         include 'includes/menu.php';
         // Retrieve user's location using functions from numTienda.php

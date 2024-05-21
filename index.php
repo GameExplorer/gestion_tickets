@@ -19,7 +19,7 @@ ini_set('display_errors', 1);
     <body>
         <?php
         include 'includes/connection.php';
-        $pageTitle = "Lista Tickets";
+        $pageTitle = "Tickets Abiertos";
         include 'includes/menu.php';
         // Retrieve user's location using functions from numTienda.php
         require_once 'includes/numTienda.php';

@@ -252,7 +252,8 @@ ini_set('display_errors', 1);
                                 </script>
                                 <div class="col-md-2 my-2">
                                     <label for="status">Estado:</label>
-                                    <select name="status" id="status" class="formControl">
+                                    <select name="status" id="status" class="formControl" <?php if ($status == "Cerrado")
+                                        echo "disabled"; ?>>
                                         <option value="Abierto" <?php if ($status == "Abierto")
                                             echo "selected"; ?>>Abierto</option>
                                         <option value="En Progreso" <?php if ($status == "En Progreso")
@@ -302,7 +303,8 @@ ini_set('display_errors', 1);
                                     <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
                                     <form method="post">
                                         <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
-                                        <input type="submit" name="close_ticket" value="Marcar como Resuelto" class="markCompletedBtn">
+                                        <input type="submit" name="close_ticket" value="Marcar como Resuelto"
+                                            class="markCompletedBtn">
                                     </form>
                                 </div>
                             </div>
@@ -311,17 +313,23 @@ ini_set('display_errors', 1);
                 <?php } ?>
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['close_ticket'])) {
+                    $checkDept = false;
+                    $checkLocation = false;
+
+                    // Determine which user type is performing the action
                     if (isset($_SESSION['loggedin'])) {
                         $checkDept = true;
                     } else {
                         $checkLocation = true;
                     }
 
-                    // Update the database based on the boolean values
+                    // Process checkLocation updates
                     if ($checkLocation) {
                         $timeTicketSolved = date("Y-m-d H:i:s");
-                        $sql = "UPDATE tickets SET check_usuario = '1', fecha_actualizacion = '$timeTicketSolved', leido_departamento = '0' WHERE id_ticket = $ticketId";
-                        if ($conn->query($sql) === TRUE) {
+                        $sql = "UPDATE tickets SET check_usuario = '1', fecha_actualizacion = '$timeTicketSolved', leido_departamento = '0' WHERE id_ticket = ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("i", $ticketId);
+                        if ($stmt->execute()) {
                             // Insert a message into the mensajes table
                             $contenido = $nombre . ' ha marcado la incidencia como Resuelto';
                             $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES (?, 'Sistema', ?, ?)";
@@ -329,16 +337,19 @@ ini_set('display_errors', 1);
                             $stmt->bind_param("iss", $ticketId, $contenido, $timeTicketSolved);
                             $stmt->execute();
                             //echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
-                            echo "<script>window.location.href = 'ticket_table.php';</script>";
                         } else {
                             echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
                         }
                     }
 
+                    // Process checkDept updates
                     if ($checkDept) {
                         $newDepartmentId = $_SESSION['department_id'];
-                        $sql = "SELECT nombre_departamento FROM departamentos WHERE id_departamento = $newDepartmentId";
-                        $result = $conn->query($sql);
+                        $sql = "SELECT nombre_departamento FROM departamentos WHERE id_departamento = ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("i", $newDepartmentId);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
                         if ($result->num_rows > 0) {
                             $row = $result->fetch_assoc();
                             $newSender = $row['nombre_departamento'];
@@ -346,34 +357,50 @@ ini_set('display_errors', 1);
                             // Default department name in case it can't find any
                             $newSender = $newDepartmentId;
                         }
+
                         $timeTicketSolved = date("Y-m-d H:i:s");
-                        $sql = "UPDATE tickets SET check_dept = '1', fecha_actualizacion = '$timeTicketSolved', leido_localizacion = '0' WHERE id_ticket = $ticketId";
-                        if ($conn->query($sql) === TRUE) {
+                        $sql = "UPDATE tickets SET check_dept = '1', fecha_actualizacion = '$timeTicketSolved', leido_localizacion = '0' WHERE id_ticket = ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("i", $ticketId);
+                        if ($stmt->execute()) {
                             // Insert a message into the mensajes table
                             $newUserName = $_SESSION['username'];
-                            $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES (?, 'Sistema', ?, ?)";
                             $contenido = $newUserName . ' de ' . $newSender . ' ha marcado la incidencia como Resuelto';
+                            $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES (?, 'Sistema', ?, ?)";
                             $stmt = $conn->prepare($sql);
                             $stmt->bind_param("iss", $ticketId, $contenido, $timeTicketSolved);
                             $stmt->execute();
                             //echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
-                            echo "<script>window.location.href = 'ticket_table.php';</script>";
                         } else {
                             echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
                         }
                     }
-                }
 
-                if ($checkDept && $checkLocation) {
-                    $timeTicketSolved = date("Y-m-d H:i:s");
-                    $sql = "UPDATE tickets SET estado ='Cerrado', oculto = '1', fecha_actualizacion = '$timeTicketSolved', leido_localizacion = '0', leido_departamento = '0' WHERE id_ticket = $ticketId";
-                    $conn->query($sql);
-                    if ($conn->query($sql) === TRUE) {
-                        $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES ($ticketId, 'Sistema', 'El Ticket está cerrado', '$timeTicketSolved')";
-                        $conn->query($sql);
-                    } else {
-                        echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
+                    // Check if both checkDept and checkLocation are true
+                    $sql = "SELECT check_usuario, check_dept FROM tickets WHERE id_ticket = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $ticketId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
+                        if ($row['check_usuario'] == 1 && $row['check_dept'] == 1) {
+                            $timeTicketSolved = date("Y-m-d H:i:s");
+                            $sql = "UPDATE tickets SET estado ='Cerrado', oculto = '1', fecha_actualizacion = '$timeTicketSolved', leido_localizacion = '0', leido_departamento = '0' WHERE id_ticket = ?";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("i", $ticketId);
+                            if ($stmt->execute()) {
+                                $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES (?, 'Sistema', 'El Ticket estÃ¡ cerrado', ?)";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->bind_param("is", $ticketId, $timeTicketSolved);
+                                $stmt->execute();
+                            } else {
+                                echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
+                            }
+                        }
                     }
+
+                    echo "<script>window.location.href = 'ticket_table.php';</script>";
                 }
                 ?>
 

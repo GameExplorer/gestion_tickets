@@ -1,4 +1,5 @@
 <?php
+
 // Default sorting parameters
 $order = isset($_GET['order']) ? $_GET['order'] : 'id_ticket';
 $sort = isset($_GET['sort']) && ($_GET['sort'] === 'DESC' || $_GET['sort'] === 'ASC') ? $_GET['sort'] : 'ASC';
@@ -213,22 +214,6 @@ if ($result->num_rows > 0) {
             }
             echo "</td>";
 
-            echo "<td class='button-group m-2'>";
-            echo '<form action="view_ticket.php" method="post">' .
-                '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
-                '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
-                '</form>';
-            //non logged - users shouldn't see this button and the status select button
-            if (isset($_SESSION['loggedin'])) {
-                echo "<select class='form-select    status-select p-2'>";
-                echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
-                echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
-                echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
-                echo "</select>";
-            }
-
-            echo "</td>";
-            echo "</tr>";
         } else if (!isset($_SESSION['loggedin']) && !$row["leido_localizacion"]) {
             echo "<tr style='background-color:#e6f7ff;' class='rowborder'>";
             echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
@@ -269,22 +254,7 @@ if ($result->num_rows > 0) {
             }
             echo "</td>";
 
-            echo "<td class='button-group m-2'>";
-            echo '<form action="view_ticket.php" method="post">' .
-                '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
-                '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
-                '</form>';
-            //non logged - users shouldn't see this button and the status select button
-            if (isset($_SESSION['loggedin'])) {
-                echo "<select class='form-select    status-select p-2'>";
-                echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
-                echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
-                echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
-                echo "</select>";
-            }
 
-            echo "</td>";
-            echo "</tr>";
         } else {
             echo "<tr class='rowborder'>";
             echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
@@ -325,23 +295,24 @@ if ($result->num_rows > 0) {
             }
             echo "</td>";
 
-            echo "<td class='button-group m-2'>";
-            echo '<form action="view_ticket.php" method="post">' .
-                '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
-                '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
-                '</form>';
-            //non logged - users shouldn't see this button and the status select button
-            if (isset($_SESSION['loggedin'])) {
-                echo "<select class='form-select    status-select p-2'>";
-                echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
-                echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
-                echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
-                echo "</select>";
-            }
 
-            echo "</td>";
-            echo "</tr>";
         }
+        echo "<td class='button-group m-2'>";
+        echo '<form action="view_ticket.php" method="post">' .
+            '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
+            '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
+            '</form>';
+        //non logged - users shouldn't see this button and the status select button
+        if (isset($_SESSION['loggedin'])) {
+            echo "<select class='form-select    status-select p-2'>";
+            echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
+            echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
+            echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
+            echo "</select>";
+        }
+
+        echo "</td>";
+        echo "</tr>";
     }
 } else {
     echo "<tr><td colspan='11'>No se han encontrado tickets.</td></tr>";
@@ -373,6 +344,43 @@ $conn->close();
         }
     }
     document.addEventListener('DOMContentLoaded', function () {
+        const statusSelects = document.querySelectorAll('.status-select');
+        statusSelects.forEach(select => {
+            select.addEventListener('change', function () {
+                console.log('status-select change event fired');
+                const row = this.closest('tr');
+                const incidentIdElement = row.querySelector('.incident-id');
+                const statusCell = row.querySelector('.Status');
+                const lastUpdatedCell = row.querySelector('.Last_Updated');
+
+                // Send AJAX request to update status
+                const xhr = new XMLHttpRequest();
+                const incidentId = incidentIdElement.textContent.trim(); // Retrieve incident ID
+                const status = this.value; // Retrieve selected status
+                const params = `incident_id=${incidentId}&status=${encodeURIComponent(status)}`;
+                lastUpdatedCell
+                xhr.open('POST', 'includes/update_status.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        const updatedTimestamp = xhr.responseText;
+
+                        if (lastUpdatedCell) {
+                            lastUpdatedCell.textContent = updatedTimestamp;
+                        }
+
+                        if (statusCell) {
+                            statusCell.textContent = status;
+                        }
+
+                    } else {
+                        alert('Error al actualizar estado: ' + xhr.responseText);
+                    }
+                };
+                xhr.send(params);
+            });
+        });
+
         const rowsPerPage = 10; // Number of rows to display per page
         let currentPage = 1; // Current page number
         let totalPages; // Total number of pages

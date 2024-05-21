@@ -104,7 +104,7 @@ ini_set('display_errors', 1);
                 $lastUpdated = date("Y-m-d H:i:s"); // Update last updated timestamp
                 $sql = "UPDATE tickets SET fecha_actualizacion = '$lastUpdated', leido_localizacion = '0', leido_departamento = '0' WHERE id_ticket = $ticketId";
                 if ($conn->query($sql) === TRUE) {
-                    echo "<script>alert('Ticket actualizado correctamente');</script>";
+                    //echo "<script>alert('Ticket actualizado correctamente');</script>";
                     echo "<script>window.location.href = 'ticket_table.php';</script>";
                 } else {
                     echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
@@ -321,7 +321,7 @@ ini_set('display_errors', 1);
                             $stmt = $conn->prepare($sql);
                             $stmt->bind_param("isss", $ticketId, $contenido, $timeTicketSolved);
                             $stmt->execute();
-                            echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
+                            //echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
                             echo "<script>window.location.href = 'ticket_table.php';</script>";
                         } else {
                             echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
@@ -348,7 +348,7 @@ ini_set('display_errors', 1);
                             $stmt = $conn->prepare($sql);
                             $stmt->bind_param("isss", $ticketId, $contenido, $timeTicketSolved);
                             $stmt->execute();
-                            echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
+                            //echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
                             echo "<script>window.location.href = 'ticket_table.php';</script>";
                         } else {
                             echo "<script>alert('Error al actualizar ticket: " . $conn->error . "');</script>";
@@ -455,11 +455,13 @@ ini_set('display_errors', 1);
                     if (isset($_SESSION['loggedin'])) {
                         // If the user is logged in, set $newSender to the department name stored in the session
                         $newDepartmentId = $_SESSION['department_id'];
+                        $newUserName = $_SESSION['username'];
                         $sql = "SELECT nombre_departamento FROM departamentos WHERE id_departamento = $newDepartmentId";
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                             $row = $result->fetch_assoc();
-                            $newSender = $row['nombre_departamento'];
+                            $newDepartmentName = $row['nombre_departamento'];
+                            $newSender = $newUserName . ", " . $newDepartmentName;
                         } else {
                             // Default department name in case it can't find any
                             $newSender = $newDepartmentId;
@@ -516,7 +518,7 @@ ini_set('display_errors', 1);
                             }
                         }
                         if (!$errorFound) {
-                            echo "<script>alert('Mensaje enviado correctamente.');</script>";
+                            //echo "<script>alert('Mensaje enviado correctamente.');</script>";
                             if (isset($_SESSION['loggedin'])) {
                                 $sql = "UPDATE tickets SET fecha_actualizacion = '$timeComment', leido_localizacion = '0' WHERE id_ticket = $ticketId";
                                 $conn->query($sql);

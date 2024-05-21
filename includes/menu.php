@@ -142,7 +142,7 @@
                 <div class="headerText">
                     <?php
                     if (isset($_SESSION['loggedin'])) {
-                        echo "Hola $user, $dept";
+                        echo "$user, $dept";
                     } else {
                         echo "Sede: $nombre";
                     }
@@ -157,24 +157,24 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link underline" href="index.php">Index</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link underline" href="ticket_form.php">Nuevo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link underline" href="ticket_table.php">Entradas Activas</a>
+                            <a class="nav-link underline" href="index.php">Abiertos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link underline" href="closed_tickets.php">Entradas Cerradas</a>
+                            <a class="nav-link underline" href="ticket_table.php">En Curso</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link underline" href="closed_tickets.php">Cerradas</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item login">
                             <?php if (isset($_SESSION['loggedin'])) {
-                                echo '<a class="nav-link" href="logout.php">Logout</a>';
+                                echo '<a class="nav-link" href="logout.php">Salir</a>';
                             } else {
-                                echo '<a class="nav-link" href="login.php">Login</a>';
+                                echo '<a class="nav-link" href="login.php">Acceder</a>';
                             } ?>
                         </li>
                     </ul>

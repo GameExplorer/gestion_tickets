@@ -40,11 +40,11 @@ if ($result->num_rows > 0) {
             <a href='#' data-column='6' class='hover-me'>Estado <i class='fas fa-sort'></i></a>
             <div class='tooltip'>Ordenar por Estado</div>
           </th>";
-    echo "<th class='sort-by'>
-            <a href='#' data-column='7'>Usuario <i class='fas fa-sort'></i></a>
+    echo "<th class=''>
+            <a href='#' data-column='7'>Cerrado Usuario <i class='fas fa-sort'></i></a>
           </th>";
-    echo "<th class='sort-by'>
-            <a href='#' data-column='8'>Dept <i class='fas fa-sort'></i></a>
+    echo "<th class=''>
+            <a href='#' data-column='8'>Cerrado Departamento <i class='fas fa-sort'></i></a>
           </th>";
     echo "<th class='sort-by'>
             <a href='#' data-column='9' class='hover-me'>Prioridad <i class='fas fa-sort'></i></a>

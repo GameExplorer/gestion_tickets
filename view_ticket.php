@@ -36,7 +36,7 @@ ini_set('display_errors', 1);
         if (isset($_SESSION['loggedin'])) {
             $sql = "UPDATE tickets SET leido_departamento=TRUE WHERE id_ticket=?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $id_ticket);
+            $stmt->bind_param("i", $ticketId);
             $stmt->execute();
         }
 
@@ -44,7 +44,7 @@ ini_set('display_errors', 1);
         if (!isset($_SESSION['loggedin'])) {
             $sql = "UPDATE tickets SET leido_localizacion=TRUE WHERE id_ticket=?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $id_ticket);
+            $stmt->bind_param("i", $ticketId);
             $stmt->execute();
         }
 

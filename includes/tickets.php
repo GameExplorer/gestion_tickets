@@ -173,61 +173,175 @@ if ($result->num_rows > 0) {
     echo "<tbody>";
 
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
-        echo "<td data-column='1'>" . $row["nombre"] . "</td>";
-        echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
-        echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
-        echo "<td data-column='4'>" . $row["titulo"] . "</td>";
-        echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
-        echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
+        if (isset($_SESSION['loggedin']) && !$row["leido_departamento"]) {
+            echo "<tr style='background-color:#d9f3ff;' class='rowborder'>";
+            echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
+            echo "<td data-column='1'>" . $row["nombre"] . "</td>";
+            echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
+            echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
+            echo "<td data-column='4'>" . $row["titulo"] . "</td>";
+            echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
+            echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
 
-        echo "<td data-column='7'>";
-        if ($row["check_usuario"] == 0) {
-            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            echo "<td data-column='7'>";
+            if ($row["check_usuario"] == 0) {
+                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
             <div class='tooltip'>Usuario marcado como sin resolver</div>";
 
-        } else {
-            echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            } else {
+                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
             <div class='tooltip'>Usuario marcado como solucionado</div>";
-        }
-        echo "</td>";
-        echo "<td data-column='8'>";
-        if ($row["check_dept"] == 0) {
-            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            }
+            echo "</td>";
+            echo "<td data-column='8'>";
+            if ($row["check_dept"] == 0) {
+                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
             <div class='tooltip'>Departamento marcado como sin resolver</div>";
-        } else {
-            echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            } else {
+                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
             <div class='tooltip'>Departamento marcado como resuelto</div>";
-        }
-        echo "</td>";
+            }
+            echo "</td>";
 
-        echo "<td data-column='9'>" . $row["prioridad"] . "</td>";
-        echo "<td class='Last_Updated' data-column='10'>" . $row["fecha_actualizacion"] . "</td>";
+            echo "<td data-column='9'>" . $row["prioridad"] . "</td>";
+            echo "<td class='Last_Updated' data-column='10'>" . $row["fecha_actualizacion"] . "</td>";
 
-        echo "<td data-column='11'>";
-        if ($row["FileCount"] > 0) {
-            echo "<img src='assets/file_icon.svg' alt='file icon' class='icons hover-me'>
+            echo "<td data-column='11'>";
+            if ($row["FileCount"] > 0) {
+                echo "<img src='assets/file_icon.svg' alt='file icon' class='icons hover-me'>
             <div class='tooltip'>El ticket contiene archivos</div>";
-        }
-        echo "</td>";
+            }
+            echo "</td>";
 
-        echo "<td class='button-group m-2'>";
-        echo '<form action="view_ticket.php" method="post">' .
-            '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
-            '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
-            '</form>';
-        //non logged - users shouldn't see this button and the status select button
-        if (isset($_SESSION['loggedin'])) {
-            echo "<select class='form-select    status-select p-2'>";
-            echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
-            echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
-            echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
-            echo "</select>";
-        }
+            echo "<td class='button-group m-2'>";
+            echo '<form action="view_ticket.php" method="post">' .
+                '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
+                '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
+                '</form>';
+            //non logged - users shouldn't see this button and the status select button
+            if (isset($_SESSION['loggedin'])) {
+                echo "<select class='form-select    status-select p-2'>";
+                echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
+                echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
+                echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
+                echo "</select>";
+            }
 
-        echo "</td>";
-        echo "</tr>";
+            echo "</td>";
+            echo "</tr>";
+        } else if (!isset($_SESSION['loggedin']) && !$row["leido_localizacion"]) {
+            echo "<tr style='background-color:#e6f7ff;' class='rowborder'>";
+            echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
+            echo "<td data-column='1'>" . $row["nombre"] . "</td>";
+            echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
+            echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
+            echo "<td data-column='4'>" . $row["titulo"] . "</td>";
+            echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
+            echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
+
+            echo "<td data-column='7'>";
+            if ($row["check_usuario"] == 0) {
+                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Usuario marcado como sin resolver</div>";
+
+            } else {
+                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Usuario marcado como solucionado</div>";
+            }
+            echo "</td>";
+            echo "<td data-column='8'>";
+            if ($row["check_dept"] == 0) {
+                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Departamento marcado como sin resolver</div>";
+            } else {
+                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Departamento marcado como resuelto</div>";
+            }
+            echo "</td>";
+
+            echo "<td data-column='9'>" . $row["prioridad"] . "</td>";
+            echo "<td class='Last_Updated' data-column='10'>" . $row["fecha_actualizacion"] . "</td>";
+
+            echo "<td data-column='11'>";
+            if ($row["FileCount"] > 0) {
+                echo "<img src='assets/file_icon.svg' alt='file icon' class='icons hover-me'>
+            <div class='tooltip'>El ticket contiene archivos</div>";
+            }
+            echo "</td>";
+
+            echo "<td class='button-group m-2'>";
+            echo '<form action="view_ticket.php" method="post">' .
+                '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
+                '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
+                '</form>';
+            //non logged - users shouldn't see this button and the status select button
+            if (isset($_SESSION['loggedin'])) {
+                echo "<select class='form-select    status-select p-2'>";
+                echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
+                echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
+                echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
+                echo "</select>";
+            }
+
+            echo "</td>";
+            echo "</tr>";
+        } else {
+            echo "<tr class='rowborder'>";
+            echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
+            echo "<td data-column='1'>" . $row["nombre"] . "</td>";
+            echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
+            echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
+            echo "<td data-column='4'>" . $row["titulo"] . "</td>";
+            echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
+            echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
+
+            echo "<td data-column='7'>";
+            if ($row["check_usuario"] == 0) {
+                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Usuario marcado como sin resolver</div>";
+
+            } else {
+                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Usuario marcado como solucionado</div>";
+            }
+            echo "</td>";
+            echo "<td data-column='8'>";
+            if ($row["check_dept"] == 0) {
+                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Departamento marcado como sin resolver</div>";
+            } else {
+                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Departamento marcado como resuelto</div>";
+            }
+            echo "</td>";
+
+            echo "<td data-column='9'>" . $row["prioridad"] . "</td>";
+            echo "<td class='Last_Updated' data-column='10'>" . $row["fecha_actualizacion"] . "</td>";
+
+            echo "<td data-column='11'>";
+            if ($row["FileCount"] > 0) {
+                echo "<img src='assets/file_icon.svg' alt='file icon' class='icons hover-me'>
+            <div class='tooltip'>El ticket contiene archivos</div>";
+            }
+            echo "</td>";
+
+            echo "<td class='button-group m-2'>";
+            echo '<form action="view_ticket.php" method="post">' .
+                '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
+                '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
+                '</form>';
+            //non logged - users shouldn't see this button and the status select button
+            if (isset($_SESSION['loggedin'])) {
+                echo "<select class='form-select    status-select p-2'>";
+                echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
+                echo "<option value='En Progreso'" . ($row["estado"] === "En Progreso" ? " selected" : "") . ">En Progreso</option>";
+                echo "<option value='En Espera'" . ($row["estado"] === "En Espera" ? " selected" : "") . ">En Espera</option>";
+                echo "</select>";
+            }
+
+            echo "</td>";
+            echo "</tr>";
+        }
     }
 } else {
     echo "<tr><td colspan='11'>No se han encontrado tickets.</td></tr>";

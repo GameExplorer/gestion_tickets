@@ -260,8 +260,6 @@ ini_set('display_errors', 1);
                                             Progreso</option>
                                         <option value="En Espera" <?php if ($status == "En Espera")
                                             echo "selected"; ?>>En Espera</option>
-                                        <option value="Cerrado" <?php if ($status == "Cerrado")
-                                            echo "selected"; ?>>Cerrado</option>
                                     </select>
                                 </div>
                             </div>
@@ -299,6 +297,15 @@ ini_set('display_errors', 1);
                                 <p><span class="ticket">Estado:</span> <span
                                         class="ticketText"><?php echo $status; ?></span></p>
                             </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12 d-flex justify-content-center">
+                                    <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
+                                    <form method="post">
+                                        <input type="hidden" name="ticket_id" value="<?php echo $ticketId; ?>">
+                                        <input type="submit" name="close_ticket" value="Marcar como Resuelto" class="markCompletedBtn">
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <?php } ?>
@@ -316,10 +323,10 @@ ini_set('display_errors', 1);
                         $sql = "UPDATE tickets SET check_usuario = '1', fecha_actualizacion = '$timeTicketSolved', leido_departamento = '0' WHERE id_ticket = $ticketId";
                         if ($conn->query($sql) === TRUE) {
                             // Insert a message into the mensajes table
-                            $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES (?, 'Sistema', ?, ?)";
                             $contenido = $nombre . ' ha marcado la incidencia como Resuelto';
+                            $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES (?, 'Sistema', ?, ?)";
                             $stmt = $conn->prepare($sql);
-                            $stmt->bind_param("isss", $ticketId, $contenido, $timeTicketSolved);
+                            $stmt->bind_param("iss", $ticketId, $contenido, $timeTicketSolved);
                             $stmt->execute();
                             //echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
                             echo "<script>window.location.href = 'ticket_table.php';</script>";
@@ -343,10 +350,11 @@ ini_set('display_errors', 1);
                         $sql = "UPDATE tickets SET check_dept = '1', fecha_actualizacion = '$timeTicketSolved', leido_localizacion = '0' WHERE id_ticket = $ticketId";
                         if ($conn->query($sql) === TRUE) {
                             // Insert a message into the mensajes table
+                            $newUserName = $_SESSION['username'];
                             $sql = "INSERT INTO mensajes (id_ticket, emisor, contenido, hora_publicacion) VALUES (?, 'Sistema', ?, ?)";
-                            $contenido = $newSender . ' ha marcado la incidencia como Resuelto';
+                            $contenido = $newUserName . ' de ' . $newSender . ' ha marcado la incidencia como Resuelto';
                             $stmt = $conn->prepare($sql);
-                            $stmt->bind_param("isss", $ticketId, $contenido, $timeTicketSolved);
+                            $stmt->bind_param("iss", $ticketId, $contenido, $timeTicketSolved);
                             $stmt->execute();
                             //echo "<script>alert('Ticket marcado como resuelto correctamente.');</script>";
                             echo "<script>window.location.href = 'ticket_table.php';</script>";

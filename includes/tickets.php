@@ -4,8 +4,15 @@
 $order = isset($_GET['order']) ? $_GET['order'] : 'id_ticket';
 $sort = isset($_GET['sort']) && ($_GET['sort'] === 'DESC' || $_GET['sort'] === 'ASC') ? $_GET['sort'] : 'ASC';
 
+// Whitelist allowed columns to sort by
+$allowed_columns = ['id_ticket', 'nombre', 'localizacion', 'nombre_departamento', 'titulo', 'fecha_creacion', 'estado', 'prioridad', 'fecha_actualizacion'];
+if (!in_array($order, $allowed_columns)) {
+    $order = 'id_ticket';
+}
 
-$result = $conn->query($sql);
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $sort == 'ASC' ? $sort = 'DESC' : $sort = 'ASC';
@@ -164,7 +171,7 @@ if ($result->num_rows > 0) {
     echo '<input type="date" id="last-updated-end-date" class="filter-input" data-column="10">';
     echo '</div>';
     echo '</div>';
-    echo '</td>';
+    echo "</td>";
 
     echo "<td></td>";
     echo '<td><button id="clearFiltersBtn">Borrar Filtros</button></td>';
@@ -175,134 +182,64 @@ if ($result->num_rows > 0) {
 
     while ($row = $result->fetch_assoc()) {
         if (isset($_SESSION['loggedin']) && !$row["leido_departamento"]) {
+            // changes color of the row if there is a change for dept
             echo "<tr style='background-color:#d9f3ff;' class='rowborder'>";
-            echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
-            echo "<td data-column='1'>" . $row["nombre"] . "</td>";
-            echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
-            echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
-            echo "<td data-column='4'>" . $row["titulo"] . "</td>";
-            echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
-            echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
-
-            echo "<td data-column='7'>";
-            if ($row["check_usuario"] == 0) {
-                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Usuario marcado como sin resolver</div>";
-
-            } else {
-                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Usuario marcado como solucionado</div>";
-            }
-            echo "</td>";
-            echo "<td data-column='8'>";
-            if ($row["check_dept"] == 0) {
-                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Departamento marcado como sin resolver</div>";
-            } else {
-                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Departamento marcado como resuelto</div>";
-            }
-            echo "</td>";
-
-            echo "<td data-column='9'>" . $row["prioridad"] . "</td>";
-            echo "<td class='Last_Updated' data-column='10'>" . $row["fecha_actualizacion"] . "</td>";
-
-            echo "<td data-column='11'>";
-            if ($row["FileCount"] > 0) {
-                echo "<img src='assets/file_icon.svg' alt='file icon' class='icons hover-me'>
-            <div class='tooltip'>El ticket contiene archivos</div>";
-            }
-            echo "</td>";
 
         } else if (!isset($_SESSION['loggedin']) && !$row["leido_localizacion"]) {
-            echo "<tr style='background-color:#e6f7ff;' class='rowborder'>";
-            echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
-            echo "<td data-column='1'>" . $row["nombre"] . "</td>";
-            echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
-            echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
-            echo "<td data-column='4'>" . $row["titulo"] . "</td>";
-            echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
-            echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
-
-            echo "<td data-column='7'>";
-            if ($row["check_usuario"] == 0) {
-                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Usuario marcado como sin resolver</div>";
-
-            } else {
-                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Usuario marcado como solucionado</div>";
-            }
-            echo "</td>";
-            echo "<td data-column='8'>";
-            if ($row["check_dept"] == 0) {
-                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Departamento marcado como sin resolver</div>";
-            } else {
-                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Departamento marcado como resuelto</div>";
-            }
-            echo "</td>";
-
-            echo "<td data-column='9'>" . $row["prioridad"] . "</td>";
-            echo "<td class='Last_Updated' data-column='10'>" . $row["fecha_actualizacion"] . "</td>";
-
-            echo "<td data-column='11'>";
-            if ($row["FileCount"] > 0) {
-                echo "<img src='assets/file_icon.svg' alt='file icon' class='icons hover-me'>
-            <div class='tooltip'>El ticket contiene archivos</div>";
-            }
-            echo "</td>";
-
+            // changes color of the row if there is a change for non logged user
+            echo "<tr style='background-color:#d9f3ff;' class='rowborder'>";
 
         } else {
+            // no changes it stays black
             echo "<tr class='rowborder'>";
-            echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
-            echo "<td data-column='1'>" . $row["nombre"] . "</td>";
-            echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
-            echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
-            echo "<td data-column='4'>" . $row["titulo"] . "</td>";
-            echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
-            echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
-
-            echo "<td data-column='7'>";
-            if ($row["check_usuario"] == 0) {
-                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Usuario marcado como sin resolver</div>";
-
-            } else {
-                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Usuario marcado como solucionado</div>";
-            }
-            echo "</td>";
-            echo "<td data-column='8'>";
-            if ($row["check_dept"] == 0) {
-                echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Departamento marcado como sin resolver</div>";
-            } else {
-                echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
-            <div class='tooltip'>Departamento marcado como resuelto</div>";
-            }
-            echo "</td>";
-
-            echo "<td data-column='9'>" . $row["prioridad"] . "</td>";
-            echo "<td class='Last_Updated' data-column='10'>" . $row["fecha_actualizacion"] . "</td>";
-
-            echo "<td data-column='11'>";
-            if ($row["FileCount"] > 0) {
-                echo "<img src='assets/file_icon.svg' alt='file icon' class='icons hover-me'>
-            <div class='tooltip'>El ticket contiene archivos</div>";
-            }
-            echo "</td>";
-
 
         }
+
+        //The rest of the table
+        echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
+        echo "<td data-column='1'>" . $row["nombre"] . "</td>";
+        echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
+        echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
+        echo "<td data-column='4'>" . $row["titulo"] . "</td>";
+        echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
+        echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
+
+        echo "<td data-column='7'>";
+        if ($row["check_usuario"] == 0) {
+            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Usuario marcado como sin resolver</div>";
+
+        } else {
+            echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Usuario marcado como solucionado</div>";
+        }
+        echo "</td>";
+        echo "<td data-column='8'>";
+        if ($row["check_dept"] == 0) {
+            echo "<img src='assets/red-x-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Departamento marcado como sin resolver</div>";
+        } else {
+            echo "<img src='assets/done-icon.svg' alt='file icon' class='hover-me statusIcons'>
+            <div class='tooltip'>Departamento marcado como resuelto</div>";
+        }
+        echo "</td>";
+
+        echo "<td data-column='9'>" . $row["prioridad"] . "</td>";
+        echo "<td class='Last_Updated' data-column='10'>" . $row["fecha_actualizacion"] . "</td>";
+
+        echo "<td data-column='11'>";
+        if ($row["FileCount"] > 0) {
+            echo "<img src='assets/file_icon.svg' alt='file icon' class='icons hover-me'>
+            <div class='tooltip'>El ticket contiene archivos</div>";
+        }
+        echo "</td>";
         echo "<td class='button-group m-2'>";
         echo '<form action="view_ticket.php" method="post">' .
             '<input type="hidden" name="ticket_id" value="' . $row["id_ticket"] . '">' .
             '<button type="submit" class=\'tableButtons\'>DETALLES</button>' .
             '</form>';
-        //non logged - users shouldn't see this button and the status select button
+
+        //non logged - users can't see the status select button
         if (isset($_SESSION['loggedin'])) {
             echo "<select class='form-select    status-select p-2'>";
             echo "<option value='Abierto'" . ($row["estado"] === "Abierto" ? " selected" : "") . ">Abierto</option>";
@@ -325,7 +262,6 @@ echo "<button id='prevPageBtn' class='btn btn-primary me-3'><i class='fa-solid f
 echo "<span class='pt-0 px-2'>Página <span id='currentPage'></span> de <span id='totalPages'></span></span>";
 echo "<button id='nextPageBtn' class='btn btn-primary ms-3'><i class='fa-solid fa-arrow-right'></i></button>";
 echo "</div>";
-
 
 $conn->close();
 ?>

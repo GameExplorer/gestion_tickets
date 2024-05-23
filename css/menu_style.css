@@ -1,6 +1,4 @@
 body {
-  margin: 0 auto;
-  display: grid;
   position: sticky;
   top: 0;
   width: 100%;
@@ -9,6 +7,7 @@ body {
 .navbar-custom {
   background-color: #f8f9fa;
   position: inherit;
+  width: 100%;
   margin-bottom: 2.5rem;
 }
 
@@ -34,7 +33,7 @@ body {
   margin-left: 10rem;
 }
 
-.LocationText {
+.headerText {
   text-align: center;
   font-size: 1em;
   color: #6c757d;
@@ -72,4 +71,30 @@ body {
   border: 3px solid #96c565;
   transition: background-color 0.4s ease-out, color 0.4s ease-out,
     border-color 0.4s ease-out;
+}
+
+.underline {
+  position: relative;
+  text-decoration: none;
+  color: #343a40;
+  transition: color 0.3s;
+}
+
+.underline:hover {
+  color: #96c565;
+}
+
+.underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background-color: #96c565;
+  transition: width 0.3s;
+}
+
+.underline:hover::after {
+  width: 100%;
 }

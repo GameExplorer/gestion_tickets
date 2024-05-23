@@ -1,7 +1,14 @@
-.navbar-custom {
+body {
+  margin: 0 auto;
+  display: grid;
   position: sticky;
-  background-color: #f8f9fa;
+  top: 0;
   width: 100%;
+}
+
+.navbar-custom {
+  background-color: #f8f9fa;
+  position: inherit;
   margin-bottom: 2.5rem;
 }
 

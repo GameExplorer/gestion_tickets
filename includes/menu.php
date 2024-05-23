@@ -139,7 +139,7 @@
                 <a class="navbar-brand" href="index.php">
                     <img src="assets/CentralUniformesLogo.png" alt="Central Uniformes Logo" width="72" height="72">
                 </a>
-                <div class="headerText">
+                <div class="px-5 headerText">
                     <?php
                     if (isset($_SESSION['loggedin'])) {
                         echo "$user, $dept";
@@ -149,7 +149,7 @@
                     ?>
                 </div>
                 <div class="title"><?php echo $pageTitle; ?></div>
-                <button class="navbar-toggler order-3" type="button" data-bs-toggle="collapse"
+                <button class="p-2 mx-5 navbar-toggler order-3" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

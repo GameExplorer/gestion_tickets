@@ -72,6 +72,12 @@
                         <li class="nav-item">
                             <a class="nav-link underline" href="closed_tickets.php">Cerradas</a>
                         </li>
+                        <?php
+
+                        if (isset($_SESSION['loggedin']) && $deptId == 0) {
+                            echo "<li class='nav-item'><a class='nav-link underline' href='usermanager.php'>Manage Users</a>";
+                        }
+                        ?>
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item login">

@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errorFound = false;
 
     // Insert ticket details into database
-    $sql = "INSERT INTO tickets (id_departamento, titulo, nombre, localizacion, prioridad, descripcion, categoria, estado, check_usuario, check_dept, fecha_creacion, leido_departamento, fecha_actualizacion, fecha_actualizacion, oculto) VALUES ('$department','$title', '$name', '$location', 'Nuevo', '$description', '$category', 'Abierto', '0', '0','$ticketOpen', '$lastUpdated', '0')";
+    $sql = "INSERT INTO tickets (id_departamento, titulo, nombre, localizacion, prioridad, descripcion, categoria, estado, check_usuario, check_dept, fecha_creacion, fecha_actualizacion, oculto, leido_localizacion, leido_departamento) VALUES ('$department','$title', '$name', '$location', 'Nuevo', '$description', '$category', 'Abierto', '0', '0','$ticketOpen', '$lastUpdated', '0', '0', '0')";
     if ($conn->query($sql) === TRUE) {
         $ticketId = $conn->insert_id;
 
@@ -69,13 +69,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (!$errorFound) {
-            echo "<script>alert('Ticket enviado.');</script>";
+            //echo "<script>alert('Ticket enviado.');</script>";
             echo "<script>window.location.href = '../index.php';</script>";
         } else {
             // Delete the ticket if there's any error with files
             $sql = "DELETE FROM tickets WHERE id_ticket = $ticketId";
             $conn->query($sql);
             echo "<script>alert('Error al enviar ticket.');</script>";
+            echo "<script>window.location.href = '../ticket_form.php?";
+            echo "title=" . urlencode($title) . "&sender=" . urlencode($name) . "&description=" . urlencode($description) . "&department=" . urlencode($department) . "&category=" . urlencode($category);
+            echo "';</script>";
         }
     } else {
         echo "<script>alert('Error: " . $sql . "<br>" . $conn->error . "');</script>";

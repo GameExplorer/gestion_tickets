@@ -128,7 +128,8 @@ if ($result->num_rows > 0) {
     // Date filter column
     echo '<td>';
     echo '<div class="date-inputs-container">';
-    echo '<i class="fas fa-calendar-alt date-filter-icon" onclick="toggleDateInputs(this)"></i>';
+    //This code disabled the date picker because it's buggy. Feel free to reenable if you want to fix it
+    //echo '<i class="fas fa-calendar-alt date-filter-icon" onclick="toggleDateInputs(this)"></i>';
     echo '<div class="date-inputs">';
     echo '<label for="start-date">Desde:</label>';
     echo '<input type="date" id="start-date" class="filter-input" data-column="5"><br>';
@@ -163,7 +164,8 @@ if ($result->num_rows > 0) {
     //Last Updated column
     echo "<td>";
     echo '<div class="date-inputs-container">';
-    echo '<i class="fas fa-calendar-alt date-filter-icon" onclick="toggleDateInputsLastUpdated(this)"></i>';
+    //This code disabled the date picker because it's buggy. Feel free to reenable if you want to fix it
+    //echo '<i class="fas fa-calendar-alt date-filter-icon" onclick="toggleDateInputsLastUpdated(this)"></i>';
     echo '<div class="date-inputs">';
     echo '<label for="last-updated-start-date">Desde:</label>';
     echo '<input type="date" id="last-updated-start-date" class="filter-input" data-column="10"><br>';

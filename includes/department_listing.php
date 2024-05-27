@@ -15,7 +15,7 @@ if ($result === false) {
     $departments = array();
 
     // Fetch each row and add it to the departments array
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
         $departments[] = $row;
     }
 

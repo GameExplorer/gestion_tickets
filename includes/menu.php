@@ -75,7 +75,7 @@
                         <?php
 
                         if (isset($_SESSION['loggedin']) && $deptId == 0) {
-                            echo "<li class='nav-item'><a class='nav-link underline' href='usermanager.php'>Manage Users</a>";
+                            echo "<li class='nav-item'><a class='nav-link underline' href='usermanager.php'>Panel de control</a>";
                         }
                         ?>
                     </ul>

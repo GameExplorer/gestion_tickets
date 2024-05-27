@@ -3,7 +3,7 @@
 include 'connection.php';
 
 // Fetch departments from the database
-$sql = "SELECT id_departamento, nombre_departamento FROM departamentos WHERE id_departamento != 0";
+$sql = "SELECT id_departamento, nombre_departamento FROM departamentos WHERE id_departamento != 0 AND disabled = 0";
 $result = $conn->query($sql);
 
 // Check if query was successful

@@ -8,7 +8,7 @@ if(isset($_GET['department'])) {
     $department = $_GET['department'];
 
     // Perform a query to fetch categories based on the department
-    $sql = "SELECT nombre_categoria FROM categorias WHERE id_departamento = ?";
+    $sql = "SELECT nombre_categoria FROM categorias WHERE id_departamento = ? AND disabled = 0";
     
     // Assuming you are using prepared statements for security
     $stmt = $conn->prepare($sql);

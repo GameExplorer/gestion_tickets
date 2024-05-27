@@ -208,13 +208,13 @@ ini_set('display_errors', 1);
                                                 $hasEnabledDepartment = true; // Set flag to true if an enabled department is found
                                             } elseif ($row['id_departamento'] == $departmentId) {
                                                 // If the selected department is disabled, render it as a non-selectable option
-                                                echo "<option value='" . $row['id_departamento'] . "' selected disabled>" . $row['nombre_departamento'] . " (disabled)</option>";
+                                                echo "<option value='" . $row['id_departamento'] . "' selected disabled>" . $row['nombre_departamento'] . " (desactivado)</option>";
                                                 $hasSelectedDepartment = true; // Set flag to true if the selected department is found
                                             }
                                         }
                                         // If no enabled department is found and the selected department is disabled, render it as a non-selectable option
                                         if (!$hasEnabledDepartment && !$hasSelectedDepartment) {
-                                            echo "<option value='' disabled hidden>$departmentId (disabled)</option>";
+                                            echo "<option value='' disabled hidden>$departmentId (desactivado)</option>";
                                         }
                                     }
                                     ?>

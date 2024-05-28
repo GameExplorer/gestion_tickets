@@ -1,27 +1,26 @@
 <?php
-// PHP code in department_listing.php
 include 'connection.php';
 
-// Fetch departments from the database
-$sql = "SELECT id_departamento, nombre_departamento FROM departamentos WHERE id_departamento != 0 AND disabled = 0";
-$result = $conn->query($sql);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Check if query was successful
-if ($result === false) {
-    // If there was an error in the query, output the error message
-    echo "Error: " . $conn->error;
-} else {
-    // Initialize an empty array to store departments
-    $departments = array();
+try {
+    $sql = "SELECT id_departamento, nombre_departamento FROM departamentos WHERE id_departamento != 0 AND disabled = 0";
+    $result = $conn->query($sql);
 
-    // Fetch each row and add it to the departments array
-    while ($row = $result->fetch_assoc()) {
-        $departments[] = $row;
+    if ($result === false) {
+        throw new Exception("Database Query Error: " . $conn->error);
+    } else {
+        $departments = array();
+        while ($row = $result->fetch_assoc()) {
+            $departments[] = $row;
+        }
+        echo json_encode($departments);
     }
-
-    // Output the departments array as JSON
-    echo json_encode($departments);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
 }
 
-// Close the database connection
 $conn->close();
+?>

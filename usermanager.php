@@ -25,7 +25,6 @@ require_once 'includes/timezone_setting.php';
             .tab {
                 overflow: hidden;
                 border: 1px solid #ccc;
-                background-color: #f1f1f1;
                 text-align: center;
             }
 
@@ -55,11 +54,9 @@ require_once 'includes/timezone_setting.php';
             .modal-content {
                 background-color: #fefefe;
                 margin: 15% auto;
-                /* 15% from the top and centered */
                 padding: 20px;
                 border: 1px solid #888;
                 width: 80%;
-                /* Could be more or less, depending on screen size */
             }
 
             /* The Close Button */

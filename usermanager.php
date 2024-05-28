@@ -343,21 +343,21 @@ require_once 'includes/timezone_setting.php';
                     });
                 });
             });
-            function openDepartmentModal() {
-                // Show the modal for adding a new department
-                $('#addDeptModal').modal('show');
+
+            function openEditDeptModal() {
+                $('#editDeptModal').modal('show');
             }
 
             $(document).ready(function () {
                 // Handle the Edit button click for departments
-                $('.viewBtn').on('click', function () {
+                $('.editDeptBtn').on('click', function () {
                     var deptId = $(this).closest('tr').attr('id').split('-')[1];
                     var deptName = $(this).closest('tr').find('td').eq(1).text();
 
                     $('#editDeptId').val(deptId);
                     $('#editDeptName').val(deptName);
 
-                    $('#editDeptModal').modal('show');
+                    openEditDeptModal();
                 });
 
                 // Handle the Edit Department form submission
@@ -532,6 +532,9 @@ require_once 'includes/timezone_setting.php';
                     });
                 });
             });
+
+
+
         </script>
     </head>
 
@@ -624,6 +627,7 @@ require_once 'includes/timezone_setting.php';
         </div>
 
         <!-- EDIT MODAL WINDOWS -->
+        <!-- Edit Department Modal -->
         <div id="editDeptModal" class="modal fade" tabindex="-1" aria-labelledby="editDeptModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -637,14 +641,15 @@ require_once 'includes/timezone_setting.php';
                             <div class="mb-3">
                                 <label for="editDeptName" class="form-label">Department Name</label>
                                 <input type="text" class="form-control" id="editDeptName" name="editDeptName" required>
-                                <input type="hidden" id="editDeptId" name="editDeptId">
                             </div>
+                            <input type="hidden" id="editDeptId" name="editDeptId">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
         <div id="editCatModal" class="modal fade" tabindex="-1" aria-labelledby="editCatModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -765,7 +770,7 @@ require_once 'includes/timezone_setting.php';
                     echo "<td>" . $row["nombre_departamento"] . "</td>";
 
                     echo "<td class='button-group'>";
-                    echo "<button type='button' class='editDeptBtn' style='color: white; font-weight: 600; background-color:#4caf50;' onclick='openEditDeptModal(" . $row["id_departamento"] . ")'>EDIT</button>";
+                    echo "<button type='button' class='editDeptBtn' style='color: white; font-weight: 600; background-color:#4caf50;' onclick='openEditDeptModal()'>EDIT</button>";
                     if ($row["id_departamento"] != 0) {
                         echo "<button type='button' id='disable-btn-" . $row["id_departamento"] . "'onclick='toggleDept(" . $row["id_departamento"] . ", \"$disabled\")' style='color: white; font-weight: 600; background-color:$buttonColor;'>$buttonText</button>";
                     }

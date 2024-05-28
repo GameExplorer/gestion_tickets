@@ -25,7 +25,10 @@ require_once 'includes/timezone_setting.php';
             .tab {
                 overflow: hidden;
                 border: 1px solid #ccc;
-                text-align: center;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                padding: 10px;
             }
 
             button {
@@ -40,6 +43,12 @@ require_once 'includes/timezone_setting.php';
 
             .tab button {
                 font-size: 1.2em;
+                margin: 5px 10px;
+                padding: 12.5px;
+                border: none;
+                border-radius: 7px;
+                outline: none;
+                cursor: pointer;
             }
 
             .tabcontent {
@@ -49,8 +58,6 @@ require_once 'includes/timezone_setting.php';
                 border-top: none;
             }
 
-
-            /* Modal Content */
             .modal-content {
                 background-color: #fefefe;
                 margin: 15% auto;
@@ -59,7 +66,6 @@ require_once 'includes/timezone_setting.php';
                 width: 80%;
             }
 
-            /* The Close Button */
             .close {
                 color: #aaa;
                 float: right;
@@ -426,7 +432,7 @@ require_once 'includes/timezone_setting.php';
                     $('#editCatModal').modal('show');
                 });
             });
-            
+
             $(document).ready(function () {
                 $('#editCatForm').on('submit', function (event) {
                     event.preventDefault();

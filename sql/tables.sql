@@ -1,6 +1,7 @@
 CREATE TABLE departamentos (
     id_departamento INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_departamento varchar(32) NOT NULL
+    nombre_departamento varchar(32) NOT NULL,
+    disabled tinyint(1) NOT NULL DEFAULT 0
 );
 
 CREATE TABLE tickets (
@@ -36,6 +37,7 @@ CREATE TABLE usuarios (
     nombre_usuario varchar(32),
     pass_usuario varchar(32),
     id_departamento int,
+    disabled tinyint(1) NOT NULL DEFAULT 0,
     CONSTRAINT un_usuario UNIQUE (id_usuario, nombre_usuario),
     FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento)
 );
@@ -53,7 +55,8 @@ CREATE TABLE categorias (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     id_departamento INT NOT NULL,
     FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento) ON DELETE CASCADE,
-    nombre_categoria varchar(32) NOT NULL
+    nombre_categoria varchar(32) NOT NULL,
+    disabled tinyint(1) NOT NULL DEFAULT 0
 );
 
 INSERT INTO departamentos (id_departamento, nombre_departamento) VALUES (0, 'Administrador');

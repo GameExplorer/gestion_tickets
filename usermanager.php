@@ -517,6 +517,13 @@ require_once 'includes/timezone_setting.php';
                                         });
                                         $('#editUserDept').html(options);
                                         $('#editUserDept').val(response.id_departamento);
+
+                                        // Disable department dropdown if user is in department 0
+                                        if (response.id_departamento == 0) {
+                                            $('#editUserDept').attr('disabled', true);
+                                        } else {
+                                            $('#editUserDept').attr('disabled', false);
+                                        }
                                     } else {
                                         $('#editUserDept').html('<option value="">No se han encontrado departamentos</option>');
                                     }
@@ -731,7 +738,8 @@ require_once 'includes/timezone_setting.php';
                             </div>
                             <div class="mb-3">
                                 <label for="newPassword" class="form-label">Cambiar Contraseña</label>
-                                <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                                <input type="password" class="form-control" id="newPassword" name="newPassword"
+                                    required>
                             </div>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </form>
@@ -745,8 +753,8 @@ require_once 'includes/timezone_setting.php';
             <h1>Lista de Usuarios</h1>
             <?php
             $sql_users = "SELECT usuarios.id_usuario, usuarios.nombre_usuario, usuarios.id_departamento, departamentos.nombre_departamento, usuarios.disabled FROM usuarios
-                      INNER JOIN departamentos ON usuarios.id_departamento = departamentos.id_departamento
-                      ";
+                        INNER JOIN departamentos ON usuarios.id_departamento = departamentos.id_departamento
+                        ";
             $result_users = $conn->query($sql_users);
 
             if ($result_users->num_rows > 0) {
@@ -821,7 +829,7 @@ require_once 'includes/timezone_setting.php';
             <h1>Lista de Categorías</h1>
             <?php
             $sql_cat = "SELECT categorias.id_categoria, categorias.id_departamento, departamentos.nombre_departamento, categorias.nombre_categoria, categorias.disabled FROM categorias
-            INNER JOIN departamentos ON categorias.id_departamento = departamentos.id_departamento";
+                INNER JOIN departamentos ON categorias.id_departamento = departamentos.id_departamento";
             $result_cat = $conn->query($sql_cat);
 
             if ($result_cat->num_rows > 0) {

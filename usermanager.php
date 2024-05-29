@@ -731,7 +731,7 @@ require_once 'includes/timezone_setting.php';
                             </div>
                             <div class="mb-3">
                                 <label for="newPassword" class="form-label">Cambiar Contraseña</label>
-                                <input type="password" class="form-control" id="newPassword" name="newPassword">
+                                <input type="password" class="form-control" id="newPassword" name="newPassword" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </form>

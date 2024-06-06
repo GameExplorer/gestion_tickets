@@ -15,6 +15,12 @@ ini_set('display_errors', 1);
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
+    <style>
+        .history {
+            margin-left: 2.5%;
+            text-transform: uppercase;
+        }
+    </style>
 
     <body>
         <?php
@@ -25,18 +31,24 @@ ini_set('display_errors', 1);
         require_once 'includes/numTienda.php';
         require_once 'includes/timezone_setting.php';
         ?>
-        <form method="GET" action="">
-            <label for="year">Año:</label>
-            <select name="year" id="year" onchange="this.form.submit()">
-                <?php
-                // Generate year options dynamically from current year to 2020
-                $currentYear = date("Y");
-                for ($year = $currentYear; $year >= 2020; $year--) {
-                    echo "<option value=\"$year\" " . (isset($_GET['year']) && $_GET['year'] == $year ? "selected" : "") . ">$year</option>";
-                }
-                ?>
-            </select>
-        </form>
+        <div class="history mb-2">
+            <form method="GET" action="" class="row g-3">
+                <div class="col-auto">
+                    <label for="year" class="form-label">Año:</label>
+                </div>
+                <div class="col-auto">
+                    <select name="year" id="year" class="form-select" onchange="this.form.submit()">
+                        <?php
+                        // Generate year options dynamically from current year to 2020
+                        $currentYear = date("Y");
+                        for ($year = $currentYear; $year >= 2020; $year--) {
+                            echo "<option value=\"$year\" " . (isset($_GET['year']) && $_GET['year'] == $year ? "selected" : "") . ">$year</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+            </form>
+        </div>
         <?php
         $selectedYear = isset($_GET['year']) ? intval($_GET['year']) : date("Y");
 

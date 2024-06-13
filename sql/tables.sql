@@ -1,4 +1,4 @@
-CREATE TABLE departamentos (
+    CREATE TABLE departamentos (
     id_departamento INT AUTO_INCREMENT PRIMARY KEY,
     nombre_departamento varchar(32) NOT NULL,
     disabled tinyint(1) NOT NULL DEFAULT 0

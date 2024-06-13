@@ -177,14 +177,14 @@ if ($result->num_rows > 0) {
 
         }
 
-        //The rest of the table
-        echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
-        echo "<td data-column='1'>" . $row["nombre"] . "</td>";
-        echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
-        echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
-        echo "<td data-column='4'>" . $row["titulo"] . "</td>";
-        echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
-        echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
+            //The rest of the table
+            echo "<td class='incident-id' data-column='0'>" . $row["id_ticket"] . "</td>";
+            echo "<td data-column='1'>" . $row["nombre"] . "</td>";
+            echo "<td data-column='2'>" . $row["localizacion"] . "</td>";
+            echo "<td data-column='3'>" . $row["nombre_departamento"] . "</td>";
+            echo "<td data-column='4'>" . $row["titulo"] . "</td>";
+            echo "<td data-column='5'>" . $row["fecha_creacion"] . "</td>";
+            echo "<td class='Status' data-column='6'>" . $row["estado"] . "</td>";
 
         echo "<td data-column='7'>";
         if ($row["check_usuario"] == 0) {
